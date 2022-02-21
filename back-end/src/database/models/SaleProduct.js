@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 const Attributes = {
-  saleId: {
+  sale_id: {
     type: Sequelize.INTEGER,
     allowNull: false,
     references: {
@@ -11,7 +11,7 @@ const Attributes = {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   },
-  productId: {
+  product_id: {
     type: Sequelize.INTEGER,
     allowNull: false,
     references: {
@@ -32,6 +32,7 @@ module.exports = (sequelize) => {
     'SaleProduct',
     Attributes,
     {
+      underscored: true,
       tableName: 'sales',
       timestamps: false,
     },

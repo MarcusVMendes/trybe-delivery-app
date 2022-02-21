@@ -7,7 +7,7 @@ const Attributes = {
     autoIncrement: true,
     primaryKey: true,
   },
-  userId: {
+  user_id: {
     type: DataTypes.INTEGER,
     references: {
       model: 'users',
@@ -16,7 +16,7 @@ const Attributes = {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   },
-  sellerId: {
+  seller_id: {
     type: DataTypes.INTEGER,
     references: {
       model: 'users',
@@ -25,19 +25,19 @@ const Attributes = {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   },
-  totalPrice: {
+  total_price: {
     type: DataTypes.DECIMAL,
     allowNull: false,
   },
-  deliveryAddress: {
+  delivery_address: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  deliveryNumber: {
+  delivery_number: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  saleDate: {
+  sale_date: {
     type: DataTypes.DATE,
     allowNull: false,
   },
@@ -52,6 +52,7 @@ module.exports = (sequelize) => {
     'Sale',
     Attributes,
     {
+      underscored: true,
       tableName: 'sales',
       timestamps: false,    
     },

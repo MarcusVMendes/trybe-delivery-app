@@ -15,7 +15,7 @@ const Attributes = {
     type: DataTypes.DECIMAL,
     allowNull: false,
   },
-  urlImage: {
+  url_image: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -26,6 +26,7 @@ module.exports = (sequelize) => {
     'Product',
     Attributes,
     {
+      underscored: true,
       tableName: 'products',
       timestamps: false,    
     },
