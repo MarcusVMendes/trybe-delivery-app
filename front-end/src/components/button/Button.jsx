@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function Button({ text, testId }) {
-  return(
+  return (
     <button type="button" data-test-id={ testId }>
       { text }
     </button>

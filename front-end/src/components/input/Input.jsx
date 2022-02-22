@@ -5,8 +5,14 @@ import './Input.css';
 function Input({ label, type, placeholder, testId }) {
   return (
     <div className="input-container">
-      <label className="input-label">{ label }</label>
+      <label
+        className="input-label"
+        htmlFor={ `${label}-input` }
+      >
+        { label }
+      </label>
       <input
+        id={ `${label}-input` }
         className="input"
         type={ type }
         placeholder={ placeholder }

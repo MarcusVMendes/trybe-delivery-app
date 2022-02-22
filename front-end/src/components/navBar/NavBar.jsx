@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function NavBar({ ...links, userName, role }) {
+function NavBar({ userName, role, ...links }) {
   const isCustomer = role === 'customer';
   const baseUrl = 'http://localhost:3000/';
 
