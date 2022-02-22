@@ -1,0 +1,26 @@
+ import React from 'react';
+import PropTypes from 'prop-types';
+import OrderStatus from '../orderStatus/OrderStatus';
+
+function OrderCard({ orderNumber, status, date, price, address, id }) {
+  return(
+    <div>
+      <p>Pedido</p>
+      <span data-test-id={`customer_orders__element-order-id-${id}`}>{ orderNumber }</span>
+      <OrderStatus id={id} status={ status } />
+      <p data-test-id={`customer_orders__element-order-date-${id}`}>{ date }</p>
+      <p>{ `R$ ${price}` }</p>
+      <span>{ address }</span>
+    </div>
+  );
+}
+
+OrderCard.propTypes = {
+  orderNumber: PropTypes.number.isRequired,
+  date: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  address: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+};
+
+export default OrderCard;
