@@ -1,13 +1,6 @@
 const rescue = require('express-rescue');
-const {
+const { 
   OK,
-  CREATED,
-  NO_CONTENT,
-  BAD_REQUEST,
-  UNAUTHORIZED,
-  NOT_FOUND,
-  CONFLICT,
-  INTERNAL_SERVER_ERROR,
 } = require('../utils/dictionary');
 
 const {
@@ -20,7 +13,6 @@ const getUserLoginController = rescue(async (req, res) => {
   return res.status(OK).json(login);
 });
 
-
 module.exports = {
   getUserLoginController,
-}
+};
