@@ -1,8 +1,13 @@
 const md5 = require('crypto-js/md5');
 const jwt = require('jsonwebtoken');
-const { loginSchema } = require('../utils/validation');
+const { loginSchema, registerSchema } = require('../utils/validation');
 const { User } = require('../../database/models');
-const { BAD_REQUEST, BAD_REQUEST_MSG } = require('../utils/dictionary');
+const { 
+  BAD_REQUEST, 
+  BAD_REQUEST_MSG, 
+  CONFLICT,
+  CONFLICT_EMAIL_MSG,
+} = require('../utils/dictionary');
 require('dotenv').config();
 
 const OPTIONS = {
@@ -15,7 +20,6 @@ const getUserLoginService = async (email, password) => {
   if (error) throw error;
   const user = await User.findOne({ where: { email } });
   const hashPassword = md5(password).toString();
-  console.log(hashPassword);
   if (!user || user.dataValues.password !== hashPassword) {
     const errorUser = { code: BAD_REQUEST, message: BAD_REQUEST_MSG };
     throw errorUser;
@@ -24,6 +28,23 @@ const getUserLoginService = async (email, password) => {
   return { token };
 };
 
+const registerNewUserService = async (name, email, password) => {
+  const { error } = registerSchema.validate({ name, email, password });
+  if (error) throw error;
+  const userExists = await User.findOne({ where: { email } });
+  console.log()
+  if (userExists) {
+    const errorUser = { code: CONFLICT, message: CONFLICT_EMAIL_MSG };
+    throw errorUser;
+  }
+  const hashPassword = md5(password).toString();
+  await User.create({ name, email, password: hashPassword , role: 'customer' });
+  return { 
+    message: 'User created successfully'
+  };
+};
+
 module.exports = {
   getUserLoginService,
+  registerNewUserService,
 };
