@@ -14,7 +14,7 @@ function NavBar({ userName, role, ...links }) {
         </div>
         <div>
           <p>{ userName }</p>
-          <a href={`${baseUrl}login`}>SAIR</a>
+          <a href={ `${baseUrl}login` }>SAIR</a>
         </div>
       </nav>
     </header>
@@ -23,6 +23,7 @@ function NavBar({ userName, role, ...links }) {
 
 NavBar.propTypes = {
   links: PropTypes.arrayOf(PropTypes.object).isRequired,
+  role: PropTypes.string.isRequired,
   userName: PropTypes.string.isRequired,
 };
 
