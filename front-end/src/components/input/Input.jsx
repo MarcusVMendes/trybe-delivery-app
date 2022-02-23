@@ -19,6 +19,7 @@ function Input({ label, type, placeholder, testId, handleChange }) {
         required
         data-testid={ testId }
         onChange={ handleChange }
+        autoComplete="off"
       />
     </div>
   );
