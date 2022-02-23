@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 function Button({ text, testId }) {
   return (
-    <button type="button" data-test-id={ testId }>
+    <button type="button" data-testid={ testId }>
       { text }
     </button>
   );

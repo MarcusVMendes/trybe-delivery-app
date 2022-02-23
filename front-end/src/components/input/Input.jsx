@@ -17,7 +17,7 @@ function Input({ label, type, placeholder, testId }) {
         type={ type }
         placeholder={ placeholder }
         required
-        data-test-id={ testId }
+        data-testid={ testId }
       />
     </div>
   );
