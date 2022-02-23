@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 
 const Attributes = {
   sale_id: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
     references: {
       model: 'sales',
@@ -12,7 +12,7 @@ const Attributes = {
     onDelete: 'CASCADE',
   },
   product_id: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
     references: {
       model: 'products',
@@ -22,7 +22,7 @@ const Attributes = {
     onDelete: 'CASCADE',
   },
   quantity: {
-    type: Sequelize.INTEGER,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
 };
