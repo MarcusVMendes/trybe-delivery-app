@@ -8,7 +8,7 @@ function OrderStatus({ status, id }) {
         { status }
       </p>
     </div>
-  ); 
+  );
 }
 
 OrderStatus.propTypes = {

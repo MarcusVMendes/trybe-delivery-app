@@ -5,12 +5,12 @@ function NavBar({ userName, role, ...links }) {
   const isCustomer = role === 'customer';
   const baseUrl = 'http://localhost:3000/';
 
-  return(
+  return (
     <header>
       <nav>
         <div>
-          <a href={ ...links }>{ ...links }</a>
-          {isCustomer && <a href={ ...links }>{ ...links }</a>}
+          <a href={ links[0].url }>{ links[0].name }</a>
+          {isCustomer && <a href={ links[1].url }>{ links[1].name }</a>}
         </div>
         <div>
           <p>{ userName }</p>
@@ -18,7 +18,6 @@ function NavBar({ userName, role, ...links }) {
         </div>
       </nav>
     </header>
-
   );
 }
 
