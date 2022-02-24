@@ -1,4 +1,5 @@
 const md5 = require('crypto-js/md5');
+const { Op } = require('sequelize');
 const { verify } = require('jsonwebtoken');
 const { registerSchema } = require('../utils/validation');
 require('dotenv').config();
@@ -12,7 +13,7 @@ const {
 
 const userIsAdmin = (token) => {
   const { role } = verify(token, process.env.JWT_SECRET);
-  if (role !== 'admin') {
+  if (role !== 'administrator') {
     const error = { code: UNAUTHORIZED, message: UNAUTHORIZED_MSG_USER };
     throw error;
   }
@@ -36,6 +37,13 @@ const createNewUserService = async (...params) => {
   };
 };
 
+const getAllNonAdminUsersService = async (token) => {
+  userIsAdmin(token);
+  const usersNonAdmin = await User.findAll({ where: { role: { [Op.not]: 'administrator' } } });
+  return usersNonAdmin;
+};
+
 module.exports = {
   createNewUserService,
+  getAllNonAdminUsersService,
 };
