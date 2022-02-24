@@ -4,10 +4,9 @@ const baseUrl = 'http://localhost:3001';
 
 const login = async (email, password) => {
   const body = { email, password };
-  const data = await axios.post(`${baseUrl}/user`, body);
-  const response = await data.json();
+  const { data } = await axios.post(`${baseUrl}/user/login`, body);
 
-  return response;
+  return data;
 };
 
 export default {

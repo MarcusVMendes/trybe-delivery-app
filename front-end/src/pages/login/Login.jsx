@@ -12,7 +12,6 @@ function Login() {
   const [password, setPassword] = useState('');
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [loginError, setLoginError] = useState(false);
-  const [user, setUser] = useState('');
   const PASSWORD_MIN_LENGTH = 6;
   const validEmail = /^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email);
 
@@ -26,11 +25,10 @@ function Login() {
     try {
       const data = await api.login(email, password);
       localStorage.setItem('user', JSON.stringify(data));
-      setUser(data);
-      if (user.role === 'customer') history.push('/customer/products');
+      if (data.role === 'customer') history.push('/customer/products');
     } catch (error) {
       setLoginError(true);
-
+      
       const THREE_SECONDS = 3000;
       setTimeout(() => {
         setLoginError(false);
