@@ -1,0 +1,39 @@
+:root {
+
+  --primary: #036b52;
+
+  --text-light: #f2fffc;
+}
+
+.login-form {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0.3em 0;
+  padding: 0.8em;
+  width: 100%;
+}
+
+
+.container button:nth-of-type( 1 ) {
+  background-color: var(--primary);
+  color: var(--text-light);
+}
+
+.container button:nth-of-type( 2 ) {
+  background-color: var(--text-light);
+  border: 1px solid var(--primary);
+  color: var(--primary);
+}
+
+.container button:nth-of-type( 1 ):disabled {
+  background-color: var(--primary);
+  color: var(--text-light);
+  opacity: 0.5;
+}
