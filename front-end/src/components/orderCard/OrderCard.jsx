@@ -7,13 +7,13 @@ function OrderCard({ orderNumber, status, date, price, address, id }) {
     <div>
       <p>Pedido</p>
       <span
-        data-test-id={ `customer_orders__element-order-id-${id}` }
+        data-testid={ `customer_orders__element-order-id-${id}` }
       >
         { orderNumber }
       </span>
       <OrderStatus id={ id } status={ status } />
       <p
-        data-test-id={ `customer_orders__element-order-date-${id}` }
+        data-testid={ `customer_orders__element-order-date-${id}` }
       >
         { date }
       </p>
