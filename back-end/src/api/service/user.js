@@ -32,15 +32,14 @@ const registerNewUserService = async (name, email, password) => {
   const { error } = registerSchema.validate({ name, email, password });
   if (error) throw error;
   const userExists = await User.findOne({ where: { email } });
-  console.log()
   if (userExists) {
     const errorUser = { code: CONFLICT, message: CONFLICT_EMAIL_MSG };
     throw errorUser;
   }
   const hashPassword = md5(password).toString();
-  await User.create({ name, email, password: hashPassword , role: 'customer' });
+  await User.create({ name, email, password: hashPassword, role: 'customer' });
   return { 
-    message: 'User created successfully'
+    message: 'User created successfully',
   };
 };
 
