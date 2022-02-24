@@ -28,7 +28,7 @@ function Login() {
       if (data.role === 'customer') history.push('/customer/products');
     } catch (error) {
       setLoginError(true);
-      
+
       const THREE_SECONDS = 3000;
       setTimeout(() => {
         setLoginError(false);
