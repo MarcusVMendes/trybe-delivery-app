@@ -16,7 +16,7 @@ const getUserLoginController = rescue(async (req, res) => {
 });
 
 const registerNewUserController = rescue(async (req, res) => {
-  const { name, email, password, role = "customer" } = req.body;
+  const { name, email, password, role = 'customer' } = req.body;
   const user = await registerNewUserService(name, email, password, role);
   return res.status(CREATED).json(user);
 });
