@@ -14,10 +14,14 @@ function Button({ text, testId, isDisabled, action }) {
   );
 }
 
+Button.defaultProps = {
+  isDisabled: false,
+};
+
 Button.propTypes = {
   text: PropTypes.string.isRequired,
   testId: PropTypes.string.isRequired,
-  isDisabled: PropTypes.bool.isRequired,
+  isDisabled: PropTypes.bool,
   action: PropTypes.func.isRequired,
 };
 
