@@ -2,9 +2,9 @@ const md5 = require('crypto-js/md5');
 const jwt = require('jsonwebtoken');
 const { loginSchema, registerSchema } = require('../utils/validation');
 const { User } = require('../../database/models');
-const { 
-  BAD_REQUEST, 
-  BAD_REQUEST_MSG, 
+const {
+  BAD_REQUEST,
+  BAD_REQUEST_MSG,
   CONFLICT,
   CONFLICT_EMAIL_MSG,
 } = require('../utils/dictionary');
@@ -28,7 +28,7 @@ const getUserLoginService = async (email, password) => {
   return { token };
 };
 
-const registerNewUserService = async (name, email, password) => {
+const registerNewUserService = async (name, email, password, role) => {
   const { error } = registerSchema.validate({ name, email, password });
   if (error) throw error;
   const userExists = await User.findOne({ where: { email } });
@@ -37,8 +37,8 @@ const registerNewUserService = async (name, email, password) => {
     throw errorUser;
   }
   const hashPassword = md5(password).toString();
-  await User.create({ name, email, password: hashPassword, role: 'customer' });
-  return { 
+  await User.create({ name, email, password: hashPassword, role });
+  return {
     message: 'User created successfully',
   };
 };

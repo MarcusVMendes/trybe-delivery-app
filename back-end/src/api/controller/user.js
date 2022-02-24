@@ -1,6 +1,6 @@
 const rescue = require('express-rescue');
-const { 
-  OK, 
+const {
+  OK,
   CREATED,
 } = require('../utils/dictionary');
 
@@ -16,8 +16,8 @@ const getUserLoginController = rescue(async (req, res) => {
 });
 
 const registerNewUserController = rescue(async (req, res) => {
-  const { name, email, password } = req.body;
-  const user = await registerNewUserService(name, email, password);
+  const { name, email, password, role = "customer" } = req.body;
+  const user = await registerNewUserService(name, email, password, role);
   return res.status(CREATED).json(user);
 });
 
