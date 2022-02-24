@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Container from '../../components/container/Container';
 import Input from '../../components/input/Input';
 import Button from '../../components/button/Button';
@@ -7,6 +7,7 @@ import './Login.css';
 import api from '../../services/api';
 
 function Login() {
+  const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [buttonDisabled, setButtonDisabled] = useState(true);
@@ -26,6 +27,7 @@ function Login() {
       const data = await api.login(email, password);
       localStorage.setItem('user', JSON.stringify(data));
       setUser(data);
+      if (user.role === 'customer') history.push('/customer/products');
     } catch (error) {
       setLoginError(true);
 
@@ -43,10 +45,6 @@ function Login() {
       setButtonDisabled(true);
     }
   }, [password, validEmail]);
-
-  if (user.role === 'customer') {
-    <Redirect to="/customer/products" />;
-  }
 
   return (
     <Container>
@@ -74,7 +72,7 @@ function Login() {
         <Button
           text="Ainda não tenho conta"
           testId="common_login__button-register"
-          action={ () => <Redirect to="/register" /> }
+          action={ () => history.push('/register') }
         />
       </form>
       <div data-testid="common_login__element-invalid-email" hidden={ !loginError }>
