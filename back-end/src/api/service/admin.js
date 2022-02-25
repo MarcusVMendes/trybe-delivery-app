@@ -48,7 +48,7 @@ const deleteUserService = async (id, token) => {
   await User.destroy({ where: { id } });
   return {
     id,
-    message: "User successfully deleted"
+    message: 'User successfully deleted',
   };
 };
 
