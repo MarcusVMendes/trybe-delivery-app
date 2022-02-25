@@ -25,7 +25,8 @@ const getUserLoginService = async (email, password) => {
   if (!user) throw errorMessage(NOT_FOUND, NOT_FOUND_MSG);
   const hashPassword = md5(password).toString();
   if (user.dataValues.password !== hashPassword) throw errorMessage(BAD_REQUEST, BAD_REQUEST_MSG);
-  const token = await jwt.sign({ email }, process.env.JWT_SECRET, OPTIONS);
+  const { role } = user;
+  const token = await jwt.sign({ email, role }, process.env.JWT_SECRET, OPTIONS);
   const userDate = {
     name: user.name,
     email: user.email,
