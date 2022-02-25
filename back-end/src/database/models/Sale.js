@@ -7,7 +7,7 @@ const Attributes = {
     autoIncrement: true,
     primaryKey: true,
   },
-  user_id: {
+  userId: {
     type: DataTypes.INTEGER,
     references: {
       model: 'users',
@@ -16,7 +16,7 @@ const Attributes = {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   },
-  seller_id: {
+  sellerId: {
     type: DataTypes.INTEGER,
     references: {
       model: 'users',
@@ -25,19 +25,19 @@ const Attributes = {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   },
-  total_price: {
+  totalPrice: {
     type: DataTypes.DECIMAL,
     allowNull: false,
   },
-  delivery_address: {
+  deliveryAddress: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  delivery_number: {
+  deliveryNumber: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  sale_date: {
+  saleDate: {
     type: DataTypes.DATE,
     allowNull: false,
   },
