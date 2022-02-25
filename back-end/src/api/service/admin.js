@@ -43,7 +43,17 @@ const getAllNonAdminUsersService = async (token) => {
   return usersNonAdmin;
 };
 
+const deleteUserService = async (id, token) => {
+  userIsAdmin(token);
+  await User.destroy({ where: { id } });
+  return {
+    id,
+    message: "User successfully deleted"
+  };
+};
+
 module.exports = {
   createNewUserService,
   getAllNonAdminUsersService,
+  deleteUserService,
 };

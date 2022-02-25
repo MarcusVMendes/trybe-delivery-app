@@ -2,6 +2,7 @@ const rescue = require('express-rescue');
 const {
   createNewUserService,
   getAllNonAdminUsersService,
+  deleteUserService,
 } = require('../service/admin');
 const { CREATED, OK } = require('../utils/dictionary');
 
@@ -18,7 +19,15 @@ const getAllNonAdminUsersController = rescue(async (req, res) => {
   return res.status(OK).json(allNonAdminUsers);
 });
 
+const deleteUserController = rescue(async (req, res) => {
+  const { id } = req.params;
+  const { authorization: token } = req.headers;
+  const deletedUser = await deleteUserService(id, token);
+  return res.status(OK).json(deletedUser);
+});
+
 module.exports = {
   createNewUserController,
   getAllNonAdminUsersController,
+  deleteUserController,
 };
