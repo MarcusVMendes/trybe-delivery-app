@@ -27,6 +27,7 @@ function NavBar({ userName, role, links }) {
           <a
             href={ `${baseUrl}login` }
             data-testid="customer_products__element-navbar-link-logout"
+            onClick={ localStorage.clear() }
           >
             Sair
           </a>
