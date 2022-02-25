@@ -9,6 +9,14 @@ const login = async (email, password) => {
   return data;
 };
 
+const getProducts = async () => {
+  const { data } = await axios.get(`${baseUrl}/products`);
+  const { products } = data;
+
+  return products;
+};
+
 export default {
   login,
+  getProducts,
 };
