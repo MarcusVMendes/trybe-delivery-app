@@ -1,5 +1,8 @@
 const rescue = require('express-rescue');
-const { createSaleService } = require('../service/sale');
+
+const {
+  createSaleService,
+} = require('../service/sale');
 
 const createSaleController = rescue(async (req, res) => {
   const dataSale = req.body;
