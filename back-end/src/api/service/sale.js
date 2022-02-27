@@ -1,16 +1,5 @@
-const { Sale, SaleProduct, Product, sequelize } = require('../../database/models');
+const { Sale, SaleProduct, sequelize } = require('../../database/models');
 const { dataSaleSchema } = require('../utils/validation');
-
-// userId
-// sellerId
-
-// totalPrice
-// deliveryAddress
-// deliveryNumber
-// status
-// products
-
-// saleDate: Date.now()
 
 const createSaleService = async (dataSale, userId) => {
   const { error } = dataSaleSchema.validate({ ...dataSale });
@@ -24,10 +13,15 @@ const createSaleService = async (dataSale, userId) => {
 
     const { products } = dataSale;
 
-    await sale.addProducts(
-      products,
+    /** 
+     * MAP RETORNA UM ARRAY DE PROMISES PARA O Promise.all(). 
+     * SE TODAS AS PROMISES ESTIVEREM RESOLVIDAS, O Promise.all = RESOLVE, SENÃO Promise.all = REJECT
+     * E A TRANSAÇÃO NÃO SERÁ CONCLUÍDA. OU SEJA, A TRANSAÇÃO SERÁ CONCLUÍDA SE TODAS AS PROMISES FOREM RESOLVIDAS.
+    */
+    await Promise.all(products.map(async (product) => SaleProduct.create(
+      { saleId: sale.id, ...product },
       { transaction: insertionsSaleAndSaleProduct },
-    );
+    )));
 
     return sale;
   });
