@@ -3,7 +3,7 @@ const { createSaleService } = require('../service/sale');
 
 const createSaleController = rescue(async (req, res) => {
   const dataSale = req.body;
-  const { id: userId } = 1;
+  const { id: userId } = req.user;
 
   await createSaleService(dataSale, userId);
 
