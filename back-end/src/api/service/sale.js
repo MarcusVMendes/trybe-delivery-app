@@ -7,7 +7,7 @@ const createSaleService = async (dataSale, userId) => {
 
   const result = sequelize.transaction(async (insertionsSaleAndSaleProduct) => {
     const sale = await Sale.create(
-      { ...dataSale, userId, saleDate: Date.now() },
+      { ...dataSale, userId },
       { transaction: insertionsSaleAndSaleProduct },
     );
 
