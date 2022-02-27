@@ -15,17 +15,24 @@ const OPTIONS = {
   algorithm: 'HS256',
 };
 
+const SECRET = process.env.JWT_SECRET;
+
 const getUserLoginService = async (email, password) => {
   const { error } = loginSchema.validate({ email, password });
   if (error) throw error;
+
   const user = await User.findOne({ where: { email } });
-  console.log(user);
+
   const hashPassword = md5(password).toString();
+
   if (!user || user.dataValues.password !== hashPassword) {
     const errorUser = { code: BAD_REQUEST, message: BAD_REQUEST_MSG };
     throw errorUser;
   }
-  const token = await jwt.sign({ email }, process.env.JWT_SECRET, OPTIONS);
+
+  const { id, role } = user;
+  const token = await jwt.sign({ id, role, email }, SECRET, OPTIONS);
+
   const userDate = {
     name: user.name,
     email: user.email,
