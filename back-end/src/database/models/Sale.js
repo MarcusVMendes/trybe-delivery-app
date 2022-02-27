@@ -15,6 +15,7 @@ const Attributes = {
     },
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
+    allowNull: false,
   },
   sellerId: {
     type: DataTypes.INTEGER,
@@ -24,6 +25,7 @@ const Attributes = {
     },
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
+    allowNull: false,
   },
   totalPrice: {
     type: DataTypes.DECIMAL,
