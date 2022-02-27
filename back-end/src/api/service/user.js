@@ -1,5 +1,6 @@
 const md5 = require('crypto-js/md5');
 const jwt = require('jsonwebtoken');
+const errorMessage = require('../utils/errorMessage');
 const { loginSchema, registerSchema } = require('../utils/validation');
 const { User } = require('../../database/models');
 const {
@@ -7,6 +8,8 @@ const {
   BAD_REQUEST_MSG,
   CONFLICT,
   CONFLICT_EMAIL_MSG,
+  NOT_FOUND,
+  NOT_FOUND_MSG,
 } = require('../utils/dictionary');
 require('dotenv').config();
 
@@ -23,16 +26,12 @@ const getUserLoginService = async (email, password) => {
 
   const user = await User.findOne({ where: { email } });
 
+  if (!user) throw errorMessage(NOT_FOUND, NOT_FOUND_MSG);
   const hashPassword = md5(password).toString();
-
-  if (!user || user.dataValues.password !== hashPassword) {
-    const errorUser = { code: BAD_REQUEST, message: BAD_REQUEST_MSG };
-    throw errorUser;
-  }
-
+  if (user.dataValues.password !== hashPassword) throw errorMessage(BAD_REQUEST, BAD_REQUEST_MSG);
   const { id, role } = user;
-  const token = await jwt.sign({ id, role, email }, SECRET, OPTIONS);
-
+  const token = await jwt.sign({ email, id, role }, process.env.JWT_SECRET, OPTIONS);
+  
   const userDate = {
     name: user.name,
     email: user.email,
@@ -46,10 +45,7 @@ const registerNewUserService = async (name, email, password, role) => {
   const { error } = registerSchema.validate({ name, email, password });
   if (error) throw error;
   const userExists = await User.findOne({ where: { email } });
-  if (userExists) {
-    const errorUser = { code: CONFLICT, message: CONFLICT_EMAIL_MSG };
-    throw errorUser;
-  }
+  if (userExists) throw errorMessage(CONFLICT, CONFLICT_EMAIL_MSG);
   const hashPassword = md5(password).toString();
   await User.create({ name, email, password: hashPassword, role });
   return {
