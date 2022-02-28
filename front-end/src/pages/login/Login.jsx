@@ -63,12 +63,14 @@ function Login() {
         />
         <Button
           text="LOGIN"
+          type="submit"
           testId="common_login__button-login"
           isDisabled={ buttonDisabled }
           action={ handleSubmit }
         />
         <Button
           text="Ainda não tenho conta"
+          type="button"
           testId="common_login__button-register"
           action={ () => history.push('/register') }
         />
