@@ -4,6 +4,7 @@ import api from '../../services/api';
 import Container from '../../components/container/Container';
 import Input from '../../components/input/Input';
 import Button from '../../components/button/Button';
+import './Register.css';
 
 const NAME_LENGTH = 12;
 const PASSWORD_LENGTH = 6;
@@ -21,47 +22,46 @@ function Register() {
     userError: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  
+  const hasEmptyFields = !nameField || !emailField || !passwordField;
+  const hasInvalidFields = Object.values(errors).some((errorValue) => errorValue === true);
   const history = useHistory();
 
-  const nameValidation = (nameValue) => {
+  const isNameValid = (value) => {
     setErrors((curr) => ({
       ...curr, // para não sobrescrever os outros estados
-      nameError: nameValue.length < NAME_LENGTH, // retorna um boolean
+      nameError: value.length < NAME_LENGTH, // retorna um boolean
     }));
   };
 
-  const emailValidation = (emailValue) => {
+  const isEmailValid = (value) => {
     setErrors((curr) => ({
       ...curr,
-      emailError: !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue),
+      emailError: !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
     }));
   };
 
-  const passwordValidation = (passwordValue) => {
+  const isPasswordValid = (value) => {
     setErrors((curr) => ({
       ...curr,
-      passwordError: passwordValue.length < PASSWORD_LENGTH,
+      passwordError: value.length < PASSWORD_LENGTH,
     }));
-  };
-
-  const isNameValid = (event) => {
-    nameValidation(event.target.value);
-  };
-
-  const isEmailValid = (event) => {
-    emailValidation(event.target.value);
-  };
-
-  const isPasswordValid = (event) => {
-    passwordValidation(event.target.value);
   };
 
   const handleChange = ({ target }) => {
     const { value, name } = target;
-    if (name === 'name') setNameField(value);
-    if (name === 'email') setEmailField(value);
-    if (name === 'password') setPasswordField(value);
+    if (name === 'name') {
+      setNameField(value);
+      isNameValid(value);
+    }
+    if (name === 'email') {
+      setEmailField(value);
+      isEmailValid(value);
+    }
+    if (name === 'password') {
+      setPasswordField(value);
+      isPasswordValid(value);
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -69,12 +69,12 @@ function Register() {
     setIsSubmitting(true);
 
     try {
-      await api.register(nameField, emailField, passwordField, (role = 'customer'));
+      await api.register(nameField, emailField, passwordField);
+      console.log('foi')
 
       history.push('/customer/products');
     } catch (err) {
-      console.error(err);
-      if (err.status === CONFLICT_ERROR) {
+      if (err.response.status === CONFLICT_ERROR) {
         setErrors((curr) => ({
           ...curr,
           userError: true,
@@ -105,7 +105,6 @@ function Register() {
           placeholder="Seu nome"
           testId="common_register__input-name"
           handleChange={ handleChange }
-          onBlur={ isNameValid }
         />
         <div
           data-testid="common_register__element-invalid_register"
@@ -120,7 +119,6 @@ function Register() {
           placeholder="email@site.com"
           testId="common_register__input-email"
           handleChange={ handleChange }
-          onBlur={ isEmailValid }
         />
         <div
           data-testid="common_register__element-invalid_register"
@@ -135,7 +133,6 @@ function Register() {
           placeholder="********"
           testId="common_register__input-password"
           handleChange={ handleChange }
-          onBlur={ isPasswordValid }
         />
         <div
           data-testid="common_register__element-invalid_register"
@@ -149,7 +146,7 @@ function Register() {
           text="CADASTRAR"
           type="submit"
           testId="common_register__button-register"
-          isDisabled={ !nameField || !emailField || !passwordField || isSubmitting }
+          isDisabled={ hasEmptyFields || hasInvalidFields || isSubmitting }
         />
       </form>
     </Container>

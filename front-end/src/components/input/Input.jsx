@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Input.css';
 
-function Input({ label, name, type, placeholder, testId, handleChange, onBlur }) {
+function Input({ label, name, type, placeholder, testId, handleChange }) {
   return (
     <div className="input-container">
       <label className="input-label" htmlFor={ `${label}-input` }>
@@ -18,7 +18,6 @@ function Input({ label, name, type, placeholder, testId, handleChange, onBlur })
         data-testid={ testId }
         onChange={ handleChange }
         autoComplete="off"
-        onBlur={ onBlur }
       />
     </div>
   );
@@ -31,12 +30,10 @@ Input.propTypes = {
   type: PropTypes.string.isRequired,
   testId: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func,
 };
 
 Input.defaultProps = {
   name: '',
-  onBlur: () => {},
 };
 
 export default Input;
