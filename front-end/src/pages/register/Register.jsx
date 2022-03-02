@@ -22,9 +22,10 @@ function Register() {
     userError: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const hasEmptyFields = !nameField || !emailField || !passwordField;
-  const hasInvalidFields = Object.values(errors).some((errorValue) => errorValue === true);
+  const hasInvalidFields = Object.values(errors)
+    .some((errorValue) => errorValue === true);
   const history = useHistory();
 
   const isNameValid = (value) => {
@@ -70,7 +71,6 @@ function Register() {
 
     try {
       await api.register(nameField, emailField, passwordField);
-      console.log('foi')
 
       history.push('/customer/products');
     } catch (err) {
