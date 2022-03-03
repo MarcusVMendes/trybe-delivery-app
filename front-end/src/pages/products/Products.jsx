@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import './Products.css';
 import api from '../../services/api';
+import ProductsContext from '../../context/ProductsContext';
 import NavBar from '../../components/navBar/NavBar';
 import ProductCard from '../../components/productCard/ProductCard';
 
 function Products() {
+  const history = useHistory();
+  const { cartTotal } = useContext(ProductsContext);
   const [products, setProducts] = useState([]);
   const user = JSON.parse(localStorage.getItem('user'));
   const links = [
@@ -14,7 +18,7 @@ function Products() {
     },
     {
       name: 'MEUS PEDIDOS',
-      url: 'http://localhost:3000/customer/products',
+      url: 'http://localhost:3000/customer/orders',
     },
   ];
 
@@ -30,10 +34,6 @@ function Products() {
 
     fetchProducts();
   }, []);
-
-  const handleCount = ({ target }) => {
-    console.log(target);
-  };
 
   if (products.length === 0) return <p>Carregando produtos...</p>;
 
@@ -53,11 +53,21 @@ function Products() {
               imageUrl={ url }
               productName={ name }
               id={ id }
-              action={ handleCount }
             />
           ))
         }
       </div>
+      <button
+        type="button"
+        data-testid="customer_products__button-cart"
+        onClick={ () => history.push('/customer/checkout') }
+        disabled={ cartTotal === '0,00' }
+      >
+        Ver carrinho: R$
+        <span data-testid="customer_products__checkout-bottom-value">
+          { cartTotal }
+        </span>
+      </button>
     </>
   );
 }
