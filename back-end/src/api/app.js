@@ -4,6 +4,7 @@ const cors = require('cors');
 const userRouter = require('./routes/user');
 const adminRouter = require('./routes/admin');
 const productRouter = require('./routes/product');
+const saleRouter = require('./routes/sale');
 
 const errorMiddleware = require('./middlewares/errorMidleware');
 
@@ -21,6 +22,7 @@ app.use('/user', userRouter);
 app.use('/admin', adminRouter);
 
 app.use('/products', productRouter);
+app.use('/sale', saleRouter);
 
 app.use('/images', express.static(join(__dirname, '..', '..', 'public')));
 

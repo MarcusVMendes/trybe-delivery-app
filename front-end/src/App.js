@@ -4,6 +4,7 @@ import './App.css';
 import ProductsProvider from './context/ProductsProvider';
 import Login from './pages/login/Login';
 import Products from './pages/products/Products';
+import Register from './pages/register/Register';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <ProductsProvider>
           <Route path="/customer/products" component={ Products } />
         </ProductsProvider>
+        <Route path="/register" component={ Register } />
       </Switch>
     </div>
   );
