@@ -1,4 +1,4 @@
-const { Sale, SaleProduct, sequelize } = require('../../database/models');
+const { Sale, SaleProduct, Product, User, sequelize } = require('../../database/models');
 const { dataSaleSchema } = require('../utils/validation');
 
 const createSaleService = async (dataSale, userId) => {
@@ -30,12 +30,24 @@ const createSaleService = async (dataSale, userId) => {
 };
 
 const getSalesService = async () => {
-  const sales = await Sale.findAll();
+  const sales = await Sale.findAll({
+    attributes: ['id', 'status', 'saleDate', 'totalPrice'],
+    include: [
+      {
+        model: User,
+        as: 'user',
+        attributes: ['name'],
+      },
+    ],
+  });
 
   return sales;
 };
 
+
+
 module.exports = {
   createSaleService,
   getSalesService,
+  getSalesByIDService,
 };
