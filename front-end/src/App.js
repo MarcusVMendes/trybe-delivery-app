@@ -14,10 +14,10 @@ function App() {
           <Redirect to="/login" />
         </Route>
         <Route path="/login" component={ Login } />
+        <Route path="/register" component={ Register } />
         <ProductsProvider>
           <Route path="/customer/products" component={ Products } />
         </ProductsProvider>
-        <Route path="/register" component={ Register } />
       </Switch>
     </div>
   );
