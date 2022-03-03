@@ -36,7 +36,10 @@ function Login() {
     }
   };
 
-  const validateLogin = (login, secret) => login && secret.length >= PASSWORD_MIN_LENGTH;
+  const validateLogin = (login, secret) => {
+    if (login && secret.length >= PASSWORD_MIN_LENGTH) return false;
+    return true;
+  } 
 
   return (
     <Container>
@@ -61,7 +64,7 @@ function Login() {
           text="LOGIN"
           type="submit"
           testId="common_login__button-login"
-          isDisabled={ !validateLogin(validEmail, password) }
+          isDisabled={ validateLogin(validEmail, password) }
           action={ handleSubmit }
         />
         <Button
