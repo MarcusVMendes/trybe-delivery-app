@@ -13,7 +13,7 @@ function Login() {
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [loginError, setLoginError] = useState(false);
   const PASSWORD_MIN_LENGTH = 6;
-  const validEmail = /^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/g.test(email);
+  const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleChange = ({ target }) => {
     const { value, type } = target;
@@ -63,12 +63,14 @@ function Login() {
         />
         <Button
           text="LOGIN"
+          type="submit"
           testId="common_login__button-login"
           isDisabled={ buttonDisabled }
           action={ handleSubmit }
         />
         <Button
           text="Ainda não tenho conta"
+          type="button"
           testId="common_login__button-register"
           action={ () => history.push('/register') }
         />

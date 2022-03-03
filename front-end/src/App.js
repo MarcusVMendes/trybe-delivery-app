@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
 import Login from './pages/login/Login';
+import Register from './pages/register/Register';
 import Checkout from './pages/checkout/Checkout';
 
 function App() {
@@ -12,11 +13,8 @@ function App() {
           <Redirect to="/login" />
         </Route>
         <Route path="/login" component={ Login } />
-
-        <Route exact path="/">
-          <Redirect to="/checkout" />
-        </Route>
         <Route path="/checkout" component={ Checkout } />
+        <Route path="/register" component={ Register } />
       </Switch>
     </div>
   );
