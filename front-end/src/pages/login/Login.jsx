@@ -30,10 +30,10 @@ function Login() {
     } catch (error) {
       setLoginError(true);
 
-      const THREE_SECONDS = 3000;
+      const TWO_SECONDS = 2000;
       setTimeout(() => {
         setLoginError(false);
-      }, THREE_SECONDS);
+      }, TWO_SECONDS);
     }
   };
 
