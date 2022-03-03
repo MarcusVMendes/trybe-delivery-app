@@ -23,12 +23,16 @@ function OrderCard({ orderNumber, status, date, price, address, id }) {
   );
 }
 
+OrderCard.defaultProps = {
+  address: '',
+};
+
 OrderCard.propTypes = {
   orderNumber: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  address: PropTypes.string.isRequired,
+  address: PropTypes.string,
   id: PropTypes.number.isRequired,
 };
 
