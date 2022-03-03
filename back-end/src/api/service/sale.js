@@ -44,10 +44,34 @@ const getSalesService = async () => {
   return sales;
 };
 
+const getSaleByIDService = async (id) => {
+  const sales = await Sale.findByPk(id,{
+    attributes: { exclude: ['deliveryAddress', 'deliveryNumber'] },
+    include: [
+      {
+        model: Product, // Sale POSSUI ASSOCIAÇÃO COM Product
+        as: 'products', // ATRAVÉS DESTE ALIAS (definidos em SaleProduct)
+        through: { attributes: ['quantity'] }, // DESSA ASSOCIAÇÃO É POSSÍVEL OBTER DADOS DA TABELA DE JUNÇÃO
+        attributes: { exclude: ['url_image'] }, // ATRIBUTOS DA TABELA Products
+      },
+      {
+        model: User,
+        as: 'user',
+        attributes: ['name'],
+      },
+      {
+        model: User,
+        as: 'seller',
+        attributes: ['name'],
+      }
+    ],
+  });
 
+  return sales;
+};
 
 module.exports = {
   createSaleService,
   getSalesService,
-  getSalesByIDService,
+  getSaleByIDService,
 };
