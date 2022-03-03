@@ -53,6 +53,7 @@ function Login() {
           type="email"
           testId="common_login__input-email"
           handleChange={ handleChange }
+          value={ email }
         />
         <Input
           label="Senha"
@@ -60,6 +61,7 @@ function Login() {
           type="password"
           testId="common_login__input-password"
           handleChange={ handleChange }
+          value={ password }
         />
         <Button
           text="LOGIN"
