@@ -17,6 +17,7 @@ module.exports = {
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
+        allowNull: false,
       },
       seller_id: {
         type: Sequelize.INTEGER,
@@ -26,9 +27,10 @@ module.exports = {
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
+        allowNull: false,
       },
       total_price: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.DECIMAL(9,2),
         allowNull: false,
       },
       delivery_address: {

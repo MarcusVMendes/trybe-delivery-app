@@ -16,7 +16,23 @@ const registerSchema = Joi.object({
     .required(),
 });
 
+const dataSaleSchema = Joi.object({
+  totalPrice: Joi.number().not().empty()
+    .required(),
+  deliveryAddress: Joi.string().not().empty()
+    .required(),
+  deliveryNumber: Joi.string().not().empty()
+    .required(),
+  status: Joi.string().not().empty()
+    .required(),
+  products: Joi.array().not().empty()
+    .required(),
+  sellerId: Joi.number().not().empty()
+    .required(),
+});
+
 module.exports = {
   loginSchema,
   registerSchema,
+  dataSaleSchema,
 };
