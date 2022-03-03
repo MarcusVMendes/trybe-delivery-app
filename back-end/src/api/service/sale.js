@@ -45,7 +45,7 @@ const getSalesService = async () => {
 };
 
 const getSaleByIDService = async (id) => {
-  const sale = await Sale.findByPk(id,{
+  const sale = await Sale.findByPk(id, {
     attributes: { exclude: ['deliveryAddress', 'deliveryNumber'] },
     include: [
       {
@@ -54,16 +54,8 @@ const getSaleByIDService = async (id) => {
         through: { attributes: ['quantity'] }, // DESSA ASSOCIAÇÃO É POSSÍVEL OBTER DADOS DA TABELA DE JUNÇÃO
         attributes: { exclude: ['url_image'] }, // ATRIBUTOS DA TABELA Products
       },
-      {
-        model: User,
-        as: 'user',
-        attributes: ['name'],
-      },
-      {
-        model: User,
-        as: 'seller',
-        attributes: ['name'],
-      }
+      { model: User, as: 'user', attributes: ['name'] },
+      { model: User, as: 'seller', attributes: ['name'] },
     ],
   });
 
