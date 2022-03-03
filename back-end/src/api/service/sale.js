@@ -45,7 +45,7 @@ const getSalesService = async () => {
 };
 
 const getSaleByIDService = async (id) => {
-  const sales = await Sale.findByPk(id,{
+  const sale = await Sale.findByPk(id,{
     attributes: { exclude: ['deliveryAddress', 'deliveryNumber'] },
     include: [
       {
@@ -67,7 +67,7 @@ const getSaleByIDService = async (id) => {
     ],
   });
 
-  return sales;
+  return sale;
 };
 
 module.exports = {
