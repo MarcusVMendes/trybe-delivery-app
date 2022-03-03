@@ -8,6 +8,7 @@ const {
 const {
   createSaleService,
   getSalesService,
+  getSaleByIDService,
 } = require('../service/sale');
 
 const createSaleController = rescue(async (req, res) => {
@@ -25,7 +26,15 @@ const getSalesController = rescue(async (_req, res) => {
   return res.status(OK).json({ sales });
 });
 
+const getSaleByIDController = rescue(async (req, res) => {
+  const { id } = req.params;
+  const sale = await getSaleByIDService(id);
+
+  return res.status(OK).json({ sale });
+});
+
 module.exports = {
   createSaleController,
   getSalesController,
+  getSaleByIDController,
 };
