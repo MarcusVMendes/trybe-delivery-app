@@ -39,7 +39,7 @@ function Login() {
   const validateLogin = (login, secret) => {
     if (login && secret.length >= PASSWORD_MIN_LENGTH) return false;
     return true;
-  } 
+  };
 
   return (
     <Container>
