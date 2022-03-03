@@ -1,7 +1,13 @@
 const rescue = require('express-rescue');
 
 const {
+  OK,
+  CREATED,
+} = require('../utils/dictionary');
+
+const {
   createSaleService,
+  getSalesService,
 } = require('../service/sale');
 
 const createSaleController = rescue(async (req, res) => {
@@ -10,9 +16,16 @@ const createSaleController = rescue(async (req, res) => {
 
   await createSaleService(dataSale, userId);
 
-  return res.status(201).json({ message: 'Venda criada' });
+  return res.status(CREATED).json({ message: 'Venda criada' });
+});
+
+const getSalesController = rescue(async (_req, res) => {
+  const sales = await getSalesService();
+
+  return res.status(OK).json({ sales });
 });
 
 module.exports = {
   createSaleController,
+  getSalesController,
 };
