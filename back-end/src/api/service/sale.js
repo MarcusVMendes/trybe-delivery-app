@@ -29,6 +29,13 @@ const createSaleService = async (dataSale, userId) => {
   return result;
 };
 
+const getSalesService = async () => {
+  const sales = await Sale.findAll();
+
+  return sales;
+};
+
 module.exports = {
   createSaleService,
+  getSalesService,
 };
