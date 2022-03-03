@@ -21,7 +21,8 @@ function Login() {
     if (type === 'password') setPassword(value);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
       const data = await api.login(email, password);
       localStorage.setItem('user', JSON.stringify(data));
@@ -29,10 +30,10 @@ function Login() {
     } catch (error) {
       setLoginError(true);
 
-      const THREE_SECONDS = 3000;
+      const TWO_SECONDS = 2000;
       setTimeout(() => {
         setLoginError(false);
-      }, THREE_SECONDS);
+      }, TWO_SECONDS);
     }
   };
 
@@ -53,6 +54,7 @@ function Login() {
           type="email"
           testId="common_login__input-email"
           handleChange={ handleChange }
+          value={ email }
         />
         <Input
           label="Senha"
@@ -60,6 +62,7 @@ function Login() {
           type="password"
           testId="common_login__input-password"
           handleChange={ handleChange }
+          value={ password }
         />
         <Button
           text="LOGIN"

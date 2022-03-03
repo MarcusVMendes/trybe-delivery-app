@@ -105,6 +105,7 @@ function Register() {
           placeholder="Seu nome"
           testId="common_register__input-name"
           handleChange={ handleChange }
+          value={ nameField }
         />
         <div
           data-testid="common_register__element-invalid_register"
@@ -119,6 +120,7 @@ function Register() {
           placeholder="email@site.com"
           testId="common_register__input-email"
           handleChange={ handleChange }
+          value={ emailField }
         />
         <div
           data-testid="common_register__element-invalid_register"
@@ -133,6 +135,7 @@ function Register() {
           placeholder="********"
           testId="common_register__input-password"
           handleChange={ handleChange }
+          value={ passwordField }
         />
         <div
           data-testid="common_register__element-invalid_register"

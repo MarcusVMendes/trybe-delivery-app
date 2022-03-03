@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './Input.css';
 
-function Input({ label, name, type, placeholder, testId, handleChange }) {
+function Input({ label, name, type, placeholder, testId, handleChange, value }) {
   return (
     <div className="input-container">
       <label className="input-label" htmlFor={ `${label}-input` }>
@@ -13,15 +13,22 @@ function Input({ label, name, type, placeholder, testId, handleChange }) {
         name={ name }
         className="input"
         type={ type }
+        min="0"
         placeholder={ placeholder }
         required
         data-testid={ testId }
         onChange={ handleChange }
         autoComplete="off"
+        value={ value }
       />
     </div>
   );
 }
+
+Input.defaultProps = {
+  value: '',
+  name: '',
+};
 
 Input.propTypes = {
   label: PropTypes.string.isRequired,
@@ -30,10 +37,7 @@ Input.propTypes = {
   type: PropTypes.string.isRequired,
   testId: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
-};
-
-Input.defaultProps = {
-  name: '',
+  value: PropTypes.string,
 };
 
 export default Input;
