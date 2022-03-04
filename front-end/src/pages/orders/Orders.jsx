@@ -25,8 +25,6 @@ function Orders() {
     fetchSales();
   }, [user]);
 
- 
-
   return (
     <>
       <NavBar
@@ -34,7 +32,7 @@ function Orders() {
         role={ user.role }
         links={ customerLinks }
       />
-      {  orders.length === 0 && <p>Você ainda fez um pedido</p> }
+      { orders.length === 0 && <p>Você ainda fez um pedido</p> }
       <div className="orders-container">
         {
           orders.map(({ id, status, saleDate, totalPrice }) => (
