@@ -18,12 +18,9 @@ app.use(cors({
 app.use(express.json());
 
 app.use('/user', userRouter);
-
 app.use('/admin', adminRouter);
-
 app.use('/products', productRouter);
 app.use('/sale', saleRouter);
-
 app.use('/images', express.static(join(__dirname, '..', '..', 'public')));
 
 app.get('/coffee', (_req, res) => res.status(418).end());

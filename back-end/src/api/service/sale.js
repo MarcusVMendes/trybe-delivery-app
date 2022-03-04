@@ -1,4 +1,4 @@
-const { Sale, SaleProduct, sequelize } = require('../../database/models');
+const { Sale, SaleProduct, Product, User, sequelize } = require('../../database/models');
 const { dataSaleSchema } = require('../utils/validation');
 
 const createSaleService = async (dataSale, userId) => {
@@ -29,6 +29,41 @@ const createSaleService = async (dataSale, userId) => {
   return result;
 };
 
+const getSalesService = async () => {
+  const sales = await Sale.findAll({
+    attributes: ['id', 'status', 'saleDate', 'totalPrice'],
+    include: [
+      {
+        model: User,
+        as: 'user',
+        attributes: ['name'],
+      },
+    ],
+  });
+
+  return sales;
+};
+
+const getSaleByIDService = async (id) => {
+  const sale = await Sale.findByPk(id, {
+    attributes: { exclude: ['deliveryAddress', 'deliveryNumber'] },
+    include: [
+      {
+        model: Product, // Sale POSSUI ASSOCIAÇÃO COM Product
+        as: 'products', // ATRAVÉS DESTE ALIAS (definidos em SaleProduct)
+        through: { attributes: ['quantity'] }, // DESSA ASSOCIAÇÃO É POSSÍVEL OBTER DADOS DA TABELA DE JUNÇÃO
+        attributes: { exclude: ['url_image'] }, // ATRIBUTOS DA TABELA Products
+      },
+      { model: User, as: 'user', attributes: ['name'] },
+      { model: User, as: 'seller', attributes: ['name'] },
+    ],
+  });
+
+  return sale;
+};
+
 module.exports = {
   createSaleService,
+  getSalesService,
+  getSaleByIDService,
 };
