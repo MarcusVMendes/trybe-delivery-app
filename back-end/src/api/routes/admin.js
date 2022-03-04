@@ -6,7 +6,7 @@ const {
   deleteUserController,
 } = require('../controller/admin');
 
-router.post('/', auth, createNewUserController);
+router.post('/register', auth, createNewUserController);
 router.get('/', auth, getAllNonAdminUsersController);
 router.delete('/:id', auth, deleteUserController);
 

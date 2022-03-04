@@ -21,11 +21,13 @@ function Login() {
     if (type === 'password') setPassword(value);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
       const data = await api.login(email, password);
       localStorage.setItem('user', JSON.stringify(data));
       if (data.role === 'customer') history.push('/customer/products');
+      if (data.role === 'administrator') history.push('/admin');
     } catch (error) {
       setLoginError(true);
 

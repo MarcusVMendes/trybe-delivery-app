@@ -23,18 +23,12 @@ const SECRET = process.env.JWT_SECRET;
 const getUserLoginService = async (email, password) => {
   const { error } = loginSchema.validate({ email, password });
   if (error) throw error;
-
   const user = await User.findOne({ where: { email } });
-
   if (!user) throw errorMessage(NOT_FOUND, NOT_FOUND_MSG);
-
   const hashPassword = md5(password).toString();
-
   if (user.dataValues.password !== hashPassword) throw errorMessage(BAD_REQUEST, BAD_REQUEST_MSG);
-  
   const { id, role } = user;
   const token = await jwt.sign({ email, id, role }, SECRET, OPTIONS);
-  
   const userDate = {
     name: user.name,
     email: user.email,
