@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import './ProductCard.css';
 import PropTypes from 'prop-types';
 import ProductsContext from '../../context/ProductsContext';
 import Input from '../input/Input';
@@ -53,24 +54,26 @@ function ProductCard({ productPrice, imageUrl, productName, id }) {
       <span data-testid={ `customer_products__element-card-title-${id}` }>
         { productName }
       </span>
-      <Button
-        testId={ `customer_products__button-card-rm-item-${id}` }
-        text="-"
-        action={ decreaseQuantity }
-      />
-      <Input
-        label=""
-        testId={ `customer_products__input-card-quantity-${id}` }
-        type="number"
-        placeholder="0"
-        handleChange={ (target) => handleChange(target) }
-        value={ quantity }
-      />
-      <Button
-        testId={ `customer_products__button-card-add-item-${id}` }
-        text="+"
-        action={ increaseQuantity }
-      />
+      <div className="card-quantity-container">
+        <Button
+          testId={ `customer_products__button-card-rm-item-${id}` }
+          text="-"
+          action={ decreaseQuantity }
+        />
+        <Input
+          label=""
+          testId={ `customer_products__input-card-quantity-${id}` }
+          type="number"
+          placeholder="0"
+          handleChange={ (target) => handleChange(target) }
+          value={ quantity }
+        />
+        <Button
+          testId={ `customer_products__button-card-add-item-${id}` }
+          text="+"
+          action={ increaseQuantity }
+        />
+      </div>
     </div>
   );
 }
