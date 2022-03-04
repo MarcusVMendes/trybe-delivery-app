@@ -23,8 +23,19 @@ const register = async (name, email, password, role = 'customer') => {
   return data;
 };
 
+const getSales = async (token) => {
+  const { data } = await axios.get(`${baseUrl}/sale`, {
+    headers: {
+      authorization: token,
+    },
+  });
+
+  return data;
+};
+
 export default {
   login,
   getProducts,
   register,
+  getSales,
 };
