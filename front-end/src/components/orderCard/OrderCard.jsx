@@ -10,7 +10,7 @@ function OrderCard({ orderNumber, status, date, price, address, id }) {
     <button
       type="button"
       className="order-card"
-      onClick={ () => history.push(`/orders/${id}`) }
+      onClick={ () => history.push(`/customer/orders/${id}`) }
     >
       <p>Pedido</p>
       <span
