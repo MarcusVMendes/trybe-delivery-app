@@ -16,9 +16,16 @@
 
 .card-container {
   display: flex;
+  flex-flow: row wrap;
+  height: 80%;
 }
 
-img {
-  height: 168px;
-  width: 168px;
+.products-cart-button {
+  background-color: var(--primary);
+  bottom: 0;
+  color: var(--light-text);
+  margin: 2em;
+  position: fixed;
+  right: 0;
+  width: 20%;
 }

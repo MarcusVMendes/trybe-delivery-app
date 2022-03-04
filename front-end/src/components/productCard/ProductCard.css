@@ -23,11 +23,9 @@ img, p, span {
   display: block;
 }
 
-/* button {
-  height: 33px;
-  margin-top: 8px;
-  width: 33px;
-} */
+.card-quantity-container {
+  display: flex;
+}
 
 .card {
   box-shadow: 0.1px 0.1px 1px;
