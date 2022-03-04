@@ -6,34 +6,15 @@ import NavBar from '../../components/navBar/NavBar';
 import OrderCard from '../../components/orderCard/OrderCard';
 
 function Orders() {
-  const [order, setOrders] = useState([]);
+  const [orders, setOrders] = useState([]);
   const user = JSON.parse(localStorage.getItem('user'));
-  const orders = [
-    {
-      id: 1,
-      status: 'PENDENTE',
-      date: '01/01/2022',
-      price: '23,80',
-    },
-    {
-      id: 2,
-      status: 'PREPARANDO',
-      date: '02/01/2022',
-      price: '14,20',
-    },
-    {
-      id: 3,
-      status: 'ENTREGUE',
-      date: '03/01/2022',
-      price: '28,46',
-    },
-  ];
 
   useEffect(() => {
+    const { token, name } = user;
     const fetchSales = async () => {
       try {
-        const response = await api.getSales(token);
-        const userOrders = response.filter((sale) => sale.id === user.id);
+        const { sales } = await api.getSales(token);
+        const userOrders = sales.filter((sale) => sale.user.name === name);
 
         setOrders(userOrders);
       } catch (error) {
@@ -42,7 +23,9 @@ function Orders() {
     };
 
     fetchSales();
-  });
+  }, [user]);
+
+ 
 
   return (
     <>
@@ -51,15 +34,16 @@ function Orders() {
         role={ user.role }
         links={ customerLinks }
       />
+      {  orders.length === 0 && <p>Você ainda fez um pedido</p> }
       <div className="orders-container">
         {
-          orders.map(({ id, status, date, price }) => (
+          orders.map(({ id, status, saleDate, totalPrice }) => (
             <OrderCard
               key={ id }
               orderNumber={ id }
               status={ status }
-              date={ date }
-              price={ price }
+              date={ saleDate }
+              price={ totalPrice }
               id={ id }
             />
           ))
