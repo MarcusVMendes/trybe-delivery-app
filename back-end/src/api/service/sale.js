@@ -31,13 +31,10 @@ const createSaleService = async (dataSale, userId) => {
 
 const getSalesService = async () => {
   const sales = await Sale.findAll({
-    attributes: ['id', 'status', 'saleDate', 'totalPrice'],
+    attributes: { exclude: ['deliveryAddress', 'deliveryNumber'] },
     include: [
-      {
-        model: User,
-        as: 'user',
-        attributes: ['name'],
-      },
+      { model: User, as: 'user', attributes: ['id', 'name'] },
+      { model: User, as: 'seller', attributes: ['id', 'name'] },
     ],
   });
 
@@ -54,8 +51,8 @@ const getSaleByIDService = async (id) => {
         through: { attributes: ['quantity'] }, // DESSA ASSOCIAÇÃO É POSSÍVEL OBTER DADOS DA TABELA DE JUNÇÃO
         attributes: { exclude: ['url_image'] }, // ATRIBUTOS DA TABELA Products
       },
-      { model: User, as: 'user', attributes: ['name'] },
-      { model: User, as: 'seller', attributes: ['name'] },
+      { model: User, as: 'user', attributes: ['id', 'name'] },
+      { model: User, as: 'seller', attributes: ['id', 'name'] },
     ],
   });
 
