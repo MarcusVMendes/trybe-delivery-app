@@ -1,4 +1,5 @@
 import React from 'react';
+import './Orders.css';
 import NavBar from '../../components/navBar/NavBar';
 import OrderCard from '../../components/orderCard/OrderCard';
 
@@ -45,18 +46,20 @@ function Orders() {
         role={ role }
         links={ links }
       />
-      {
-        orders.map(({ orderNumber, status, date, price, id }) => (
-          <OrderCard
-            key={ orderNumber }
-            orderNumber={ orderNumber }
-            status={ status }
-            date={ date }
-            price={ price }
-            id={ id }
-          />
-        ))
-      }
+      <div className="orders-container">
+        {
+          orders.map(({ orderNumber, status, date, price, id }) => (
+            <OrderCard
+              key={ orderNumber }
+              orderNumber={ orderNumber }
+              status={ status }
+              date={ date }
+              price={ price }
+              id={ id }
+            />
+          ))
+        }
+      </div>
     </>
   );
 }
