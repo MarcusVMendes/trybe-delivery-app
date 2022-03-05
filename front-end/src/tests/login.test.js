@@ -30,6 +30,11 @@ describe('1. Testa o componente <Login /> ', () => {
     expect(buttomRegister).toBeInTheDocument();
   });
   
+  test('Testa se o botão de logar está desabilitado antes de informar as credenciais', () => {
+    const buttomLogin = screen.getByRole('button', { name: 'LOGIN' });
+    expect(buttomLogin.disabled).toBe(true);
+  });
+
 
 });
 
