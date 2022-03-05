@@ -35,6 +35,25 @@ describe('1. Testa o componente <Login /> ', () => {
     expect(buttomLogin.disabled).toBe(true);
   });
 
+  test('Testa se é informado quando um login é inválido', () => {
+    const loginInvalid = screen.getByTestId(loginInvalidTestID);
+    expect(loginInvalid.hidden).toBe(true);
+
+    // captura o input
+    const emailInput = screen.getByLabelText(/login/i);
+    const passInput = screen.getByLabelText(/senha/i);
+    // escreve
+    userEvent.type(emailInput, 'email@mail.com');
+    userEvent.type(passInput, '123456');
+    // verifica
+    const buttomLogin = screen.getByRole('button', { name: /login/i });
+    userEvent.click(buttomLogin);
+
+    const alertMessage = screen.getByText(/Email ou senha incorretos/i)
+    expect(alertMessage.textContent).toBe('Email ou senha incorretos');
+
+  });
+
 
 });
 
