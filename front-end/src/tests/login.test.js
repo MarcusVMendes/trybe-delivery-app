@@ -51,10 +51,22 @@ describe('1. Testa o componente <Login /> ', () => {
 
     const alertMessage = screen.getByText(/Email ou senha incorretos/i)
     expect(alertMessage.textContent).toBe('Email ou senha incorretos');
-
   });
 
+  // test('Testa se é possível realizar o login', () => {
+  //   // captura o input
+  //   const emailInput = screen.getByLabelText(/login/i);
+  //   const passInput = screen.getByLabelText(/senha/i);
+  //   // escreve
+  //   userEvent.type(emailInput, 'zebirita@email.com');
+  //   userEvent.type(passInput, '$#zebirita#$');
+  //   // clica em login
+  //   const buttomLogin = screen.getByRole('button', { name: /login/i });
+  //   userEvent.click(buttomLogin);
 
+  //   const loading = screen.getByText(/carregando/i);
+  //   expect(loading).toBeInTheDocument();
+  // });
 });
 
 // describe('conjunto de testes 2', () => {
