@@ -25,6 +25,11 @@ describe('1. Testa o componente <Login /> ', () => {
     expect(buttomLogin).toBeInTheDocument();
   });
 
+  test('Testa se existe o botão de cadastro', () => {
+    const buttomRegister = screen.getByTestId(buttonRegisterID);
+    expect(buttomRegister).toBeInTheDocument();
+  });
+  
 
 });
 
