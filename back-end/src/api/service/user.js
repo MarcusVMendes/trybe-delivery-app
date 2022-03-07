@@ -19,7 +19,7 @@ const OPTIONS = {
 };
 
 // const SECRET = process.env.JWT_SECRET;
-const SECRET = 'senhasuperdificil';
+const SECRET = 'parangaricutirimirruaro';
 
 const getUserLoginService = async (email, password) => {
   const { error } = loginSchema.validate({ email, password });

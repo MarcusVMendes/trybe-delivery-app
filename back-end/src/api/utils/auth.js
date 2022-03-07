@@ -9,7 +9,7 @@ const {
 } = require('./dictionary');
 
 // const SECRET = process.env.JWT_SECRET;
-const SECRET = 'senhasuperdificil';
+const SECRET = 'parangaricutirimirruaro';
 
 module.exports = (req, res, next) => {
   const token = req.headers.authorization;
