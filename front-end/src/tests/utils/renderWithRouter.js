@@ -13,7 +13,7 @@ function renderWithRouter(componentToRender) {
       </Router>,
     ),
     history: customHistory,
-  }
-};
+  };
+}
 
 export default renderWithRouter;
