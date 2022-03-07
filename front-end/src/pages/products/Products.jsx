@@ -58,6 +58,7 @@ function Products() {
         }
       </div>
       <button
+        className="products-cart-button"
         type="button"
         data-testid="customer_products__button-cart"
         onClick={ () => history.push('/customer/checkout') }
