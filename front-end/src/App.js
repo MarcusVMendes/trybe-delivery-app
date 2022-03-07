@@ -14,7 +14,7 @@ function App() {
         </Route>
         <Route path="/login" component={ Login } />
         <Route path="/register" component={ Register } />
-        <Route path="/admin" component={ Admin } />
+        <Route path="/admin/manage" component={ Admin } />
       </Switch>
     </div>
   );

@@ -14,6 +14,7 @@ function Admin() {
   const [role, setRole] = useState('Vendedor');
   const [token, setToken] = useState('');
   const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [users, setUsers] = useState([]);
   const history = useHistory();
   const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const handleChange = ({ target: { type, value } }) => {
@@ -37,11 +38,33 @@ function Admin() {
     }
   };
 
+  const setUsersTableData = async () => {
+    const data = await api.getAllNonAdminUsers(token);
+    setUsers(data);
+  };
+
+  const renderUserTable = () => {
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Tipo</th>
+            <th>Excluir</th>
+          </tr>
+        </thead>
+      </table>
+    )
+  };
+
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('user'));
     if (userData.role !== 'administrator') history.push('/verificar uma rota');
     setToken(userData.token);
     handleButtonActivation();
+    setUsersTableData();
   }, [name, email, password, validEmail, history]);
 
   return (
@@ -51,7 +74,7 @@ function Admin() {
           label="Name"
           placeholder="Nome e sobrenome"
           type="text"
-          testId="admin_manage_input-name"
+          testId="admin_manage__input-name"
           value={ name }
           handleChange={ handleChange }
         />
@@ -59,7 +82,7 @@ function Admin() {
           label="Email"
           placeholder="seu-email@email.com.br"
           type="email"
-          testId="admin_manage_input-email"
+          testId="admin_manage__input-email"
           value={ email }
           handleChange={ handleChange }
         />
@@ -67,13 +90,14 @@ function Admin() {
           label="Password"
           placeholder="**********"
           type="password"
-          testId="admin_manage_input-password"
+          testId="admin_manage__input-password"
           value={ password }
           handleChange={ handleChange }
         />
         <select
           onChange={ handleChange }
           value={ role }
+          data-testid="admin_manage__select-role"
         >
           <option value="Vendedor">Vendedor</option>
           <option value="Usuario">Usuario</option>
@@ -82,12 +106,12 @@ function Admin() {
         <Button
           text="Cadastrar"
           type="button"
-          testId="common_login__button-register"
+          testId="admin_manage__button-register"
           isDisabled={ buttonDisabled }
           action={ () => handleSubmit() }
-          // action={ () => history.push('/register') }
         />
       </form>
+      {renderUserTable()}
     </div>
   );
 }
