@@ -17,7 +17,7 @@ function Table() {
     };
 
     fetchSale();
-  });
+  }, [user, id]);
 
   const checkStatus = (status) => status !== 'Em Trânsito';
 
