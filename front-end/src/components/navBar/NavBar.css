@@ -1,0 +1,49 @@
+:root {
+
+  --primary: #036b52;
+
+  --secondary: #2fc18c;
+
+  --tertiary: #421981;
+
+  --quaternary: #056cf9;
+
+  --dark-text: #001813;
+
+  --light-text: #f2fffc;
+
+}
+
+header {
+  background-color: var(--primary);
+  color: var(--light-text);
+  padding: 10px 0;
+  text-decoration: none;
+  width: 100%;
+}
+
+nav {
+  display: flex;
+}
+
+a, p {
+  padding: 10px;
+}
+
+a:nth-of-type( 1 ) {
+  background-color: var(--quaternary);
+  font-weight: 700;
+}
+
+a:nth-of-type( 2 ) {
+  font-weight: 700;
+}
+
+a:nth-child( 1 ) {
+  background-color: var(--secondary);
+  color: var(--dark-text);
+}
+
+header p {
+  background-color: var(--tertiary);
+}

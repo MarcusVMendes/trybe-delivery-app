@@ -9,6 +9,13 @@ const login = async (email, password) => {
   return data;
 };
 
+const getProducts = async () => {
+  const { data } = await axios.get(`${baseUrl}/products`);
+  const { products } = data;
+
+  return products;
+};
+
 const register = async (name, email, password, role = 'customer') => {
   const body = { name, email, password, role };
   const data = await axios.post(`${baseUrl}/user/register`, body);
@@ -18,5 +25,6 @@ const register = async (name, email, password, role = 'customer') => {
 
 export default {
   login,
+  getProducts,
   register,
 };
