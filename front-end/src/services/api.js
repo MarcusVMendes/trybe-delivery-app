@@ -23,8 +23,17 @@ const register = async (name, email, password, role = 'customer') => {
   return data;
 };
 
+const insertSale = async (infosSale) => {
+  // const { userId, sellerId, totalPrice, deliveryAdress, deliveryNumber, saleDate, status } = infosSale;
+  const { data } = await axios.post(`${baseUrl}/sale`, infosSale);
+  console.log(data);
+
+  // return data;
+};
+
 export default {
   login,
   getProducts,
   register,
+  insertSale,
 };
