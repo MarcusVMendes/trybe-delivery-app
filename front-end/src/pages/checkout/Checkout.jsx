@@ -6,6 +6,7 @@ import Input from '../../components/input/Input';
 // import ProductsContext from '../../context/ProductsContext';
 
 import './checkout.css';
+import api from '../../services/api';
 
 function Checkout() {
   // const { cart, setCart, cartTotal } = useContext(ProductsContext);
@@ -32,13 +33,20 @@ function Checkout() {
   const removeItem = (data) => {
     // const filterData = cart.filter(({ item }) => data.item !== item);
     // setCart(filterData);
-    const filterData = obj.filter(({ item }) => data.item !== item)
+    const filterData = obj.filter(({ item }) => data.item !== item);
     return filterData;
   };
 
-  const finalizeOrder = () => {
-    console.log('finalizar pedido');
-  }
+  const finalizeOrder = async (infosSale) => {
+    try {
+      const { adress, number } = infosSale;
+      const data = await api.insertSale(adress, number);
+
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
