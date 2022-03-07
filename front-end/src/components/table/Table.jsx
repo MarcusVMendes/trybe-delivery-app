@@ -17,14 +17,16 @@ function Table() {
     };
 
     fetchSale();
-  }, [id, user]);
+  });
+
+  const checkStatus = (status) => status !== 'Em Trânsito';
 
   if (order.length === 0) return <p>Carregando...</p>;
 
-  const { id: orderId, seller: { name }, saleDate, status } = order[0];
+  const { id: orderId, seller: { name }, saleDate, status, products } = order[0];
 
   return (
-    <>
+    <section>
       Detalhe do Pedido
       <span
         data-testid={ `${tableHeaderTestIdPrefix}-order-id` }
@@ -48,48 +50,51 @@ function Table() {
       <button
         type="button"
         data-testid="customer_order_details__button-delivery-check"
+        disabled={ checkStatus(status) }
       >
         MARCAR COMO ENTREGUE
       </button>
       <table>
-        <tr>
-          <th>Item</th>
-          <th>Descrição</th>
-          <th>Quantidade</th>
-          <th>Valor Unitário</th>
-          <th>Sub-total</th>
-        </tr>
-        { order.map((ord, index) => (
-          <tr key={ ord.id }>
-            <td
-              data-testid={ `${tableTestIdPrefix}-table-item-number-${index}` }
-            >
-              { index + 1 }
-            </td>
-            <td
-              data-testid={ `${tableTestIdPrefix}-table-name-${index}` }
-            >
-              { ord.products[index].name }
-            </td>
-            <td
-              data-testid={ `${tableTestIdPrefix}-table-quantity-${index}` }
-            >
-              { ord.products[index].saleProduct }
-            </td>
-            <td
-              data-testid={ `${tableTestIdPrefix}-table-sub-total-${index}` }
-            >
-              { ord.products[index].price }
-            </td>
-            <td
-              data-testid={ `${tableTestIdPrefix}-total-price-${index}` }
-            >
-              { ord.products[index].totalPrice }
-            </td>
+        <tbody>
+          <tr>
+            <th>Item</th>
+            <th>Descrição</th>
+            <th>Quantidade</th>
+            <th>Valor Unitário</th>
+            <th>Sub-total</th>
           </tr>
-        ))}
+          { products.map((prod, index) => (
+            <tr key={ prod.id }>
+              <td
+                data-testid={ `${tableTestIdPrefix}-table-item-number-${index}` }
+              >
+                { index + 1 }
+              </td>
+              <td
+                data-testid={ `${tableTestIdPrefix}-table-name-${index}` }
+              >
+                { prod.name }
+              </td>
+              <td
+                data-testid={ `${tableTestIdPrefix}-table-quantity-${index}` }
+              >
+                { prod.SaleProduct.quantity }
+              </td>
+              <td
+                data-testid={ `${tableTestIdPrefix}-table-sub-total-${index}` }
+              >
+                { prod.price }
+              </td>
+              <td
+                data-testid={ `${tableTestIdPrefix}-total-price-${index}` }
+              >
+                { (prod.SaleProduct.quantity * prod.price).toFixed(2) }
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
-    </>
+    </section>
   );
 }
 
