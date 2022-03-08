@@ -14,7 +14,7 @@ describe('Testa o componente de página <Register />', () => {
   const NAME_VALID_MSG = 'O campo nome deve ter no mínimo 12 caracteres';
   const EMAIL_VALID_MSG = 'Digite um email válido';
   const PASS_VALID_MSG = 'O campo senha deve ter no mínimo 6 caracteres';
-
+  const PASSWORD_MIN_CHAR = 6;
   beforeEach(() => {
     renderWithRouter(<Register />);
 
@@ -48,6 +48,15 @@ describe('Testa o componente de página <Register />', () => {
     const alertEmail = screen.getByText(EMAIL_VALID_MSG);
     expect(alertEmail).toBeInTheDocument();
   });
-  // test('Testa se no campo SENHA aparece a mensagem informativa personalizada', () => {});
+  
+  test(`Testa o campo SENHA: verifica se aparece uma mensagem informativa ao digitar uma senha com menos de ${PASSWORD_MIN_CHAR} caracteres`, () => {
+    const alertMessages = screen.queryAllByTestId(ELEMENT_INVALID_ID);
+    expect(alertMessages.every((message) => message.hidden)).toBe(false);
+
+    userEvent.type(PASSWORD_INPUT, '123');
+
+    const alertPass = screen.getByText(PASS_VALID_MSG);
+    expect(alertPass).toBeInTheDocument();
+  });
   // test('', () => {});
 });
