@@ -33,15 +33,6 @@ function Admin() {
     await api.adminRegister(name, email, password, role, userData.token);
   };
 
-  const handleButtonActivation = () => {
-    if (validEmail && password.length >= PASSWORD_MIN_LENGTH
-      && name.length >= NAME_MIN_LENGHT) {
-      setButtonDisabled(false);
-    } else {
-      setButtonDisabled(true);
-    }
-  };
-
   useEffect(() => {
     const setUsersTableData = async () => {
       const data = await api.getAllNonAdminUsers(userData.token);
@@ -51,10 +42,19 @@ function Admin() {
   }, [userData.token]);
 
   useEffect(() => {
+    const handleButtonActivation = () => {
+      if (validEmail && password.length >= PASSWORD_MIN_LENGTH
+        && name.length >= NAME_MIN_LENGHT) {
+        setButtonDisabled(false);
+      } else {
+        setButtonDisabled(true);
+      }
+    };
+
     handleButtonActivation();
   }, [name, email, password, validEmail, history]);
 
-  const renderRegisterForm = () => {
+  function renderRegisterForm() {
     return (
       <form className="admin-form">
         <Input
@@ -99,9 +99,9 @@ function Admin() {
         />
       </form>
     );
-  };
+  }
 
-  const renderUserTable = () => {
+  function renderUserTable() {
     return (
       <table>
         <thead>
@@ -128,7 +128,7 @@ function Admin() {
         </tbody>
       </table>
     );
-  };
+  }
 
   return (
     <div className="wrapper">
