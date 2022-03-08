@@ -6,9 +6,8 @@ import Input from '../../components/input/Input';
 import ProductsContext from '../../context/ProductsContext';
 import api from '../../services/api';
 
-function checkout2() {
+function Checkout() {
   const { cart, setCart, cartTotal } = useContext(ProductsContext);
-  console.log(cart);
   const [adress, setAdress] = useState('');
   const [number, setNumber] = useState('');
   const user = JSON.parse(localStorage.getItem('user'));
@@ -21,23 +20,61 @@ function checkout2() {
     return filterData;
   };
 
-  const finalizeOrder = async (totalPrice, deliveryAddress, deliveryNumber, status, products, sellerId) => {
+  const finalizeOrder = async (...infoSale) => {
     const { token } = JSON.parse(localStorage.getItem('user'));
     try {
-      const data = await api.insertSale(totalPrice, deliveryAddress, deliveryNumber, status, products, sellerId, token);
-
-      return data;
+      const [
+        totalPrice, deliveryAddress, deliveryNumber, status, products, sellerId,
+      ] = infoSale;
+      const { dataValues } = await api.insertSale(
+        token, totalPrice, deliveryAddress, deliveryNumber, status, products, sellerId,
+      );
+      console.log(dataValues);
+      history.push(`/customer/orders/${dataValues.id}`);
+      return dataValues;
     } catch (error) {
       console.log(error.response);
     }
   };
 
-  const totalCart = parseFloat(cartTotal).toFixed(2);
+  const totalPrice = cartTotal.replace(',', '.');
 
   const links = [
     { name: 'Produtos', url: 'http://localhost:3000/products' },
     { name: 'Meus pedidos', url: 'http://localhost:3000/customer/orders' },
   ];
+
+  const form = () => (
+    <form>
+      <label htmlFor="vendedor">
+        P. Vendedora Responsável
+        <select
+          data-testid="customer_checkout__select-seller"
+          name="vendedor"
+          id="vendedor"
+        >
+          <option value="fernanda">Fernanda</option>
+          <option value="maria">Maria</option>
+        </select>
+      </label>
+      <Input
+        label="Endereço"
+        testId="customer_checkout__input-address"
+        name="endereco"
+        type="text"
+        handleChange={ ({ target }) => setAdress(target.value) }
+        value={ adress }
+      />
+      <Input
+        label="Número"
+        testId="customer_checkout__input-addressNumber"
+        name="numero"
+        type="text"
+        handleChange={ ({ target }) => setNumber(target.value) }
+        value={ number }
+      />
+    </form>
+  );
 
   return (
     <div>
@@ -65,15 +102,41 @@ function checkout2() {
           </tr>
           { cart.map((data, index) => (
             <tr key={ data.productId }>
-              <td data-testid={`customer_checkout__element-order-table-item-number-${index}`}>{index + 1}</td>
-              <td data-testd={`customer_checkout__element-order-table-name-${index}`}>{data.name}</td>
-              <td data-testd={`customer_checkout__element-order-table-quantity-${index}`}>{data.quantity}</td>
-              <td data-testd={`customer_checkout__element-order-table-unit-price-${index}`}>{data.subTotal / data.quantity}</td>
-              <td data-testd={`customer_checkout__element-order-table-sub-total-${index}`}>{data.subTotal}</td>
+              <td
+                data-testid={
+                  `customer_checkout__element-order-table-item-number-${index}`
+                }
+              >
+                {index + 1}
+              </td>
+              <td
+                data-testid={ `customer_checkout__element-order-table-name-${index}` }
+              >
+                {data.name}
+              </td>
+              <td
+                data-testid={ `customer_checkout__element-order-table-quantity-${index}` }
+              >
+                {data.quantity}
+              </td>
+              <td
+                data-testid={
+                  `customer_checkout__element-order-table-unit-price-${index}`
+                }
+              >
+                {(data.subTotal / data.quantity).toFixed(2).replace('.', ',')}
+              </td>
+              <td
+                data-testid={
+                  `customer_checkout__element-order-table-sub-total-${index}`
+                }
+              >
+                {(data.subTotal).replace('.', ',')}
+              </td>
               <td>
                 <button
                   type="button"
-                  data-testd={`customer_checkout__element-order-table-remove-${index}`}
+                  data-testid={ `customer_checkout__element-order-table-remove-${index}` }
                   onClick={ () => removeItem(data) }
                 >
                   Remover
@@ -82,44 +145,21 @@ function checkout2() {
             </tr>
           )) }
         </table>
-        <div data-testd={`customer_checkout__element-order-total-price`}>
-          {`Total: R$ ${totalCart}`}
+        <div data-testid="customer_checkout__element-order-total-price">
+          {totalPrice.replace('.', ',')}
         </div>
         <div>
           <h2>Detalhes e Endereço para Entrega</h2>
           <div>
-            <form>
-              <label htmlFor="vendedor">
-                P. Vendedora Responsável
-                <select name="vendedor" id="vendedor">
-                  <option value="fernanda">Fernanda</option>
-                  <option value="maria">Maria</option>
-                </select>
-              </label>
-              <Input
-                label="Endereço"
-                name="endereco"
-                type="text"
-                handleChange={ ({ target }) => setAdress(target.value) }
-                value={ adress }
-              />
-              <Input
-                label="Número"
-                name="numero"
-                type="text"
-                handleChange={ ({ target }) => setNumber(target.value) }
-                value={ number }
-              />
-            </form>
+            { form() }
             <Button
               text="FINALIZAR PEDIDO"
+              testId="customer_checkout__button-submit-order"
               type="button"
               isDisabled={ false }
-              // Ao final do pedido (ao clicar no 'Botão de finalização do pedido'), a tela de checkout deve
-              // disparar uma requisição pra API, inserindo a venda e retornando o id da mesma, para utilização no
-              // redirecionamento.
-              action={ () => finalizeOrder(totalCart, adress, number, 'pendente', cart, 2) }
-              // action={ () => console.log('deu certo') }
+              action={
+                () => finalizeOrder(totalPrice, adress, number, 'pendente', cart, 2)
+              }
             />
           </div>
         </div>
@@ -128,4 +168,4 @@ function checkout2() {
   );
 }
 
-export default checkout2;
+export default Checkout;

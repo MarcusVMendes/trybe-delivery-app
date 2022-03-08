@@ -23,16 +23,15 @@ const register = async (name, email, password, role = 'customer') => {
   return data;
 };
 
-// const getSellers = async () => {
-//   const users = await axios.get(`${baseUrl}/user`)
-// };
-
-const insertSale = async (totalPrice, deliveryAddress, deliveryNumber, status, products, sellerId, token) => {
-  const infosSale = { totalPrice, deliveryAddress, deliveryNumber, status, products, sellerId };
-  const { data } = await axios.post(`${baseUrl}/sale`, infosSale, {
+const insertSale = async (token, ...infoSale) => {
+  const [
+    totalPrice, deliveryAddress, deliveryNumber, status, products, sellerId] = infoSale;
+  const { data } = await axios.post(`${baseUrl}/sale`, {
+    totalPrice, deliveryAddress, deliveryNumber, status, products, sellerId,
+  }, {
     headers: {
       authorization: token,
-    }
+    },
   });
   console.log(data);
 
