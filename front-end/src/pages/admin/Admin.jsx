@@ -86,9 +86,9 @@ function Admin() {
           value={ role }
           data-testid="admin_manage__select-role"
         >
-          <option value="Seller">Seller</option>
-          <option value="Customer">Customer</option>
-          <option value="Administrator">Administrator</option>
+          <option value="seller">Seller</option>
+          <option value="customer">Customer</option>
+          <option value="administrator">Administrator</option>
         </select>
         <Button
           text="Cadastrar"
