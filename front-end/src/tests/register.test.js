@@ -23,7 +23,7 @@ describe('Testa o componente de página <Register />', () => {
     PASSWORD_INPUT = screen.getByTestId(/input-password/i);
   });
 
-  test('Testa se são apresentados todos os campos para realizar o registro', () => {
+  test('Testa se são apresentados os campos NOME, EMAIL E PASSWORD para realizar o registro', () => {
     expect(NAME_INPUT).toBeInTheDocument();
     expect(EMAIL_INPUT).toBeInTheDocument();
     expect(PASSWORD_INPUT).toBeInTheDocument();
