@@ -8,7 +8,8 @@ const {
   UNAUTHORIZED_TOKEN_INVALID,
 } = require('./dictionary');
 
-const SECRET = process.env.JWT_SECRET;
+// const SECRET = process.env.JWT_SECRET;
+const SECRET = 'parangaricutirimirruaro';
 
 module.exports = (req, res, next) => {
   try {

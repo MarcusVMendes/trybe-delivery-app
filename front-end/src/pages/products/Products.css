@@ -1,0 +1,31 @@
+:root {
+
+  --primary: #036b52;
+
+  --secondary: #2fc18c;
+
+  --tertiary: #421981;
+
+  --quaternary: #056cf9;
+
+  --dark-text: #001813;
+
+  --light-text: #f2fffc;
+
+}
+
+.card-container {
+  display: flex;
+  flex-flow: row wrap;
+  height: 80%;
+}
+
+.products-cart-button {
+  background-color: var(--primary);
+  bottom: 0;
+  color: var(--light-text);
+  margin: 2em;
+  position: fixed;
+  right: 0;
+  width: 20%;
+}

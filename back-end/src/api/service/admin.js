@@ -11,8 +11,10 @@ const {
   UNAUTHORIZED_MSG_USER,
 } = require('../utils/dictionary');
 
+const SECRET = 'parangaricutirimirruaro';
+
 const userIsAdmin = (token) => {
-  const { role } = verify(token, process.env.JWT_SECRET);
+  const { role } = verify(token, SECRET);
   if (role !== 'administrator') {
     const error = { code: UNAUTHORIZED, message: UNAUTHORIZED_MSG_USER };
     throw error;

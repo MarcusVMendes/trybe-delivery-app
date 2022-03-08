@@ -16,7 +16,6 @@ function Admin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('Vendedor');
-  const [token, setToken] = useState('');
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [users, setUsers] = useState([]);
   const history = useHistory();
@@ -31,7 +30,7 @@ function Admin() {
   };
 
   const handleSubmit = async () => {
-    await api.adminRegister(name, email, password, role, token);
+    await api.adminRegister(name, email, password, role, userData.token);
   };
 
   const handleButtonActivation = () => {
@@ -49,7 +48,7 @@ function Admin() {
       setUsers(data);
     };
     setUsersTableData();
-  }, []);
+  }, [userData.token]);
 
   useEffect(() => {
     handleButtonActivation();

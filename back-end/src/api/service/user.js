@@ -18,7 +18,8 @@ const OPTIONS = {
   algorithm: 'HS256',
 };
 
-const SECRET = process.env.JWT_SECRET;
+// const SECRET = process.env.JWT_SECRET;
+const SECRET = 'parangaricutirimirruaro';
 
 const getUserLoginService = async (email, password) => {
   const { error } = loginSchema.validate({ email, password });

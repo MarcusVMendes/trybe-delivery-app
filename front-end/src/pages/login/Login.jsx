@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Container from '../../components/container/Container';
 import Input from '../../components/input/Input';
@@ -10,7 +10,6 @@ function Login() {
   const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [buttonDisabled, setButtonDisabled] = useState(true);
   const [loginError, setLoginError] = useState(false);
   const PASSWORD_MIN_LENGTH = 6;
   const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -31,20 +30,17 @@ function Login() {
     } catch (error) {
       setLoginError(true);
 
-      const THREE_SECONDS = 3000;
+      const TWO_SECONDS = 2000;
       setTimeout(() => {
         setLoginError(false);
-      }, THREE_SECONDS);
+      }, TWO_SECONDS);
     }
   };
 
-  useEffect(() => {
-    if (validEmail && password.length >= PASSWORD_MIN_LENGTH) {
-      setButtonDisabled(false);
-    } else {
-      setButtonDisabled(true);
-    }
-  }, [password, validEmail]);
+  const validateLogin = (login, secret) => {
+    if (login && secret.length >= PASSWORD_MIN_LENGTH) return false;
+    return true;
+  };
 
   return (
     <Container>
@@ -55,6 +51,7 @@ function Login() {
           type="email"
           testId="common_login__input-email"
           handleChange={ handleChange }
+          value={ email }
         />
         <Input
           label="Senha"
@@ -62,12 +59,13 @@ function Login() {
           type="password"
           testId="common_login__input-password"
           handleChange={ handleChange }
+          value={ password }
         />
         <Button
           text="LOGIN"
           type="submit"
           testId="common_login__button-login"
-          isDisabled={ buttonDisabled }
+          isDisabled={ validateLogin(validEmail, password) }
           action={ handleSubmit }
         />
         <Button
