@@ -26,7 +26,7 @@ function Checkout() {
       const [
         totalPrice, deliveryAddress, deliveryNumber, status, products, sellerId,
       ] = infoSale;
-      const { dataValues } = await api.insertSale(
+      const dataValues = await api.insertSale(
         token, totalPrice, deliveryAddress, deliveryNumber, status, products, sellerId,
       );
       console.log(dataValues);
@@ -158,7 +158,7 @@ function Checkout() {
               type="button"
               isDisabled={ false }
               action={
-                () => finalizeOrder(totalPrice, adress, number, 'pendente', cart, 2)
+                () => finalizeOrder(totalPrice, adress, number, 'Pendente', cart, 2)
               }
             />
           </div>
