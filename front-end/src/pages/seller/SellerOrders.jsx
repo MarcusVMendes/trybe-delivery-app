@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 // import { useHistory } from 'react-router-dom';
-// import api from '../../services/api';
+import api from '../../services/api';
 import NavBar from '../../components/navBar/NavBar';
-import Container from '../../components/container/Container';
 import OrderCard from '../../components/orderCard/OrderCard';
 
 const ordersMock = [
@@ -22,43 +21,42 @@ const ordersMock = [
     price: 10,
     address: 'Rua tal, numero 1'
   }
-]
+];
+
+const links = [
+  {
+    name: 'PEDIDOS',
+    url: 'http://localhost:3000/seller/orders',
+  },
+];
 
 function SellerOrders() {
-  // const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState([]);
   const user = JSON.parse(localStorage.getItem('user'));
-  const links = [
-    {
-      name: 'PEDIDOS',
-      url: 'http://localhost:3000/seller/orders',
-    },
-    {
-      name: 'MEUS PEDIDOS',
-      url: 'http://localhost:3000/customer/orders',
-    },
-  ];
 
-  // useEffect(() => {
-  //   const fetchOrders = async () => {
-  //     try {
-  //       const response = await api.getOrders();
-  //       setOrders(response);
-  //     } catch (error) {
-  //       console.log(error.response);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await api.getOrders(user.token);
+        setOrders(response);
+      } catch (error) {
+        console.log(error.response);
+      }
+    };
 
-  //   fetchOrders();
-  // }, []);
+    fetchOrders();
+  }, []);
 
-  // if (!orders) return <p>Carregando...</p>;
+  console.log(orders)
+
+  if (!orders) return <p>Carregando vendas...</p>;
 
   return (
     <>
-      <NavBar userName={user.name} links={links} />
-      <Container>
+      <NavBar userName={user.name} role={user.role} links={links} />
+      <div>
         {ordersMock.map((order) => (<OrderCard key={ order.id } order={ order } />))}
-      </Container>
+      </div>
     </>
   );
 }
