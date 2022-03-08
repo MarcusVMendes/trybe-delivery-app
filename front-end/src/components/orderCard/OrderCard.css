@@ -1,4 +1,6 @@
 .order-card {
+  border: 2px solid black;
   display: flex;
   flex-direction: row;
+  margin-bottom: 20px;
 }
