@@ -17,7 +17,6 @@ function ProductCard({ productPrice, imageUrl, productName, id }) {
       quantity: qtd,
       subTotal: parseFloat(price * qtd).toFixed(2),
     };
-    console.log(item);
 
     const newCart = cart.filter((prod) => prod.productId !== id);
 
