@@ -35,8 +35,14 @@ describe('Testa o componente de página <Register />', () => {
     expect(alertName).toBeInTheDocument();
   });
 
-  test('Testa se no campo EMAIL aparece a mensagem informativa personalizada', () => {
+  test('Testa o campo EMAIL: verifica se aparece uma mensagem informativa ao digitar um e-mail inválido', () => {
+    const alertMessages = screen.queryAllByTestId('common_register__element-invalid_register');    
+    expect(alertMessages.every((message) => message.hidden)).toBe(false);
 
+    userEvent.type(EMAIL_INPUT, 'email');
+
+    const alertEmail = screen.getByText(EMAIL_VALID_MSG);
+    expect(alertEmail).toBeInTheDocument();
   });
   // test('Testa se no campo SENHA aparece a mensagem informativa personalizada', () => {});
   // test('', () => {});
