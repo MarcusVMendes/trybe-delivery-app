@@ -9,6 +9,13 @@ const login = async (email, password) => {
   return data;
 };
 
+const register = async (name, email, password, role = 'customer') => {
+  const body = { name, email, password, role };
+  const data = await axios.post(`${baseUrl}/user/register`, body);
+
+  return data;
+};
+
 const getProducts = async () => {
   const { data } = await axios.get(`${baseUrl}/products`);
   const { products } = data;
@@ -16,9 +23,18 @@ const getProducts = async () => {
   return products;
 };
 
-const register = async (name, email, password, role = 'customer') => {
-  const body = { name, email, password, role };
-  const data = await axios.post(`${baseUrl}/user/register`, body);
+const getOrders = async (token) => {
+  const headers = { authorization: token }
+  const { data } = await axios.get(`${baseUrl}/sale`, { headers });
+  // const { products } = data;
+
+  return data;
+};
+
+const getOrderById = async (token, id) => {
+  const headers = { authorization: token }
+  const { data } = await axios.get(`${baseUrl}/sale/${id}`, { headers });
+  // const { products } = data;
 
   return data;
 };
@@ -82,7 +98,6 @@ const getSaleById = async (token, id) => {
 
 export default {
   login,
-  getProducts,
   register,
   insertSale,
   getSales,
@@ -90,4 +105,7 @@ export default {
   adminRegister,
   getAllNonAdminUsers,
   getUserByEmail,
+  getProducts,
+  getOrders,
+  getOrderById,
 };
