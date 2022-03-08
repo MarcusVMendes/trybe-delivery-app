@@ -23,6 +23,22 @@ const register = async (name, email, password, role = 'customer') => {
   return data;
 };
 
+const adminRegister = async (...params) => {
+  const [name, email, password, role = 'customer', token] = params;
+  const body = { name, email, password, role };
+  const headers = { 'Content-Type': 'application/json', authorization: token };
+  const data = await axios.post(`${baseUrl}/admin/register`, body, { headers });
+
+  return data;
+};
+
+const getAllNonAdminUsers = async (token) => {
+  const headers = { authorization: token };
+  const { data } = await axios.get(`${baseUrl}/admin`, { headers });
+
+  return data;
+};
+
 const getSales = async (token) => {
   const { data } = await axios.get(`${baseUrl}/sale`, {
     headers: {
@@ -37,5 +53,7 @@ export default {
   login,
   getProducts,
   register,
+  adminRegister,
+  getAllNonAdminUsers,
   getSales,
 };

@@ -26,6 +26,7 @@ function Login() {
       const data = await api.login(email, password);
       localStorage.setItem('user', JSON.stringify(data));
       if (data.role === 'customer') history.push('/customer/products');
+      if (data.role === 'administrator') history.push('/admin/manage');
     } catch (error) {
       setLoginError(true);
 
