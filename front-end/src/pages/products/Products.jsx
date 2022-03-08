@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import './Products.css';
 import api from '../../services/api';
+import { customerLinks } from '../../utils/navBarLinks';
 import ProductsContext from '../../context/ProductsContext';
 import NavBar from '../../components/navBar/NavBar';
 import ProductCard from '../../components/productCard/ProductCard';
@@ -11,16 +12,6 @@ function Products() {
   const { cartTotal } = useContext(ProductsContext);
   const [products, setProducts] = useState([]);
   const user = JSON.parse(localStorage.getItem('user'));
-  const links = [
-    {
-      name: 'PRODUTOS',
-      url: 'http://localhost:3000/customer/products',
-    },
-    {
-      name: 'MEUS PEDIDOS',
-      url: 'http://localhost:3000/customer/orders',
-    },
-  ];
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -42,7 +33,7 @@ function Products() {
       <NavBar
         userName={ user.name }
         role={ user.role }
-        links={ links }
+        links={ customerLinks }
       />
       <div className="card-container">
         {
