@@ -3,6 +3,7 @@ import './OrderCard.css';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import OrderStatus from '../orderStatus/OrderStatus';
+import './OrderCard.css';
 
 function OrderCard({ orderNumber, status, date, price, address, id }) {
   const history = useHistory();
