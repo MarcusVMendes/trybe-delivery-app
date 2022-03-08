@@ -10,6 +10,7 @@ describe('Testa o componente de página <Register />', () => {
   let EMAIL_INPUT = '';
   let PASSWORD_INPUT = '';
 
+  const ELEMENT_INVALID_ID = 'common_register__element-invalid_register';
   const NAME_VALID_MSG = 'O campo nome deve ter no mínimo 12 caracteres';
   const EMAIL_VALID_MSG = 'Digite um email válido';
   const PASS_VALID_MSG = 'O campo senha deve ter no mínimo 6 caracteres';
@@ -28,7 +29,10 @@ describe('Testa o componente de página <Register />', () => {
     expect(PASSWORD_INPUT).toBeInTheDocument();
   });
 
-  test('Testa se no campo NOME aparece a mensagem informativa personalizada', () => {
+  test('Testa o campo NOME: verifica se aparece uma mensagem informativa ao digitar um nome com a quantidade de caracteres insuficientes', () => {
+    const alertMessages = screen.queryAllByTestId(ELEMENT_INVALID_ID);    
+    expect(alertMessages.every((message) => message.hidden)).toBe(false);
+
     userEvent.type(NAME_INPUT, 'leticia');
 
     const alertName = screen.getByText(NAME_VALID_MSG);
@@ -36,7 +40,7 @@ describe('Testa o componente de página <Register />', () => {
   });
 
   test('Testa o campo EMAIL: verifica se aparece uma mensagem informativa ao digitar um e-mail inválido', () => {
-    const alertMessages = screen.queryAllByTestId('common_register__element-invalid_register');    
+    const alertMessages = screen.queryAllByTestId(ELEMENT_INVALID_ID);    
     expect(alertMessages.every((message) => message.hidden)).toBe(false);
 
     userEvent.type(EMAIL_INPUT, 'email');
