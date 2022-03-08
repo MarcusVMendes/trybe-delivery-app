@@ -26,7 +26,6 @@ function Admin() {
 
   const handleSubmit = async () => {
     await api.adminRegister(name, email, password, role, token);
-    global.alert('Usuario cadastrado com sucesso');
   };
 
   const handleButtonActivation = () => {
@@ -43,32 +42,16 @@ function Admin() {
     setUsers(data);
   };
 
-  const renderUserTable = () => {
-    return (
-      <table>
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Nome</th>
-            <th>E-mail</th>
-            <th>Tipo</th>
-            <th>Excluir</th>
-          </tr>
-        </thead>
-      </table>
-    )
-  };
-
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('user'));
     if (userData.role !== 'administrator') history.push('/verificar uma rota');
     setToken(userData.token);
     handleButtonActivation();
     setUsersTableData();
-  }, [name, email, password, validEmail, history]);
+  }, [name, email, password, validEmail, history, users]);
 
-  return (
-    <div className="wrapper">
+  const renderRegisterForm = () => {
+    return (
       <form className="admin-form">
         <Input
           label="Name"
@@ -108,9 +91,44 @@ function Admin() {
           type="button"
           testId="admin_manage__button-register"
           isDisabled={ buttonDisabled }
-          action={ () => handleSubmit() }
+          action={ (e) => handleSubmit(e) }
         />
       </form>
+    )
+  };
+
+  const renderUserTable = () => {
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Tipo</th>
+            <th>Excluir</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            users.map((user, index) => (
+              <tr key={ index }>
+                <td data-testid={`admin_manage__element-user-table-item-number-${index}`}>{user.id}</td>
+                <td data-testid={`admin_manage__element-user-table-name-${index}`}>{user.name}</td>
+                <td data-testid={`admin_manage__element-user-table-email-${index}`}>{user.email}</td>
+                <td data-testid={`admin_manage__element-user-table-role-${index}`}>{user.role}</td>
+                <td data-testid={`admin_manage__element-user-table-remove-${index}`}>Botao excluir</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    )
+  };
+
+  return (
+    <div className="wrapper">
+      {renderRegisterForm()}
       {renderUserTable()}
     </div>
   );

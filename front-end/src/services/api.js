@@ -21,7 +21,6 @@ const adminRegister = async (...params) => {
   const body = { name, email, password, role };
   const headers = { 'Content-Type': 'application/json', authorization: token };
   const data = await axios.post(`${baseUrl}/admin/register`, body, { headers });
-  console.log('api', data);
 
   return data;
 };
@@ -29,6 +28,7 @@ const adminRegister = async (...params) => {
 const getAllNonAdminUsers = async (token) => {
   const headers = { authorization: token };
   const { data } = await axios.get(`${baseUrl}/admin`, { headers });
+  console.log('api', data)
 
   return data;
 };
