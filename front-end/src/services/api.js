@@ -28,7 +28,6 @@ const adminRegister = async (...params) => {
 const getAllNonAdminUsers = async (token) => {
   const headers = { authorization: token };
   const { data } = await axios.get(`${baseUrl}/admin`, { headers });
-  console.log('api', data)
 
   return data;
 };

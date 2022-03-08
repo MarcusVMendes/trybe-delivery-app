@@ -6,7 +6,11 @@ import api from '../../services/api';
 
 const NAME_MIN_LENGHT = 12;
 const PASSWORD_MIN_LENGTH = 6;
-
+const testUser = 'admin_manage__element-user-table-item-number';
+const testName = 'admin_manage__element-user-table-name';
+const testEmail = 'admin_manage__element-user-table-email';
+const testRole = 'admin_manage__element-user-table-role';
+const testRemove = 'admin_manage__element-user-table-remove';
 function Admin() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -17,6 +21,8 @@ function Admin() {
   const [users, setUsers] = useState([]);
   const history = useHistory();
   const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const userData = JSON.parse(localStorage.getItem('user'));
+
   const handleChange = ({ target: { type, value } }) => {
     if (type === 'text') setName(value);
     if (type === 'email') setEmail(value);
@@ -37,18 +43,17 @@ function Admin() {
     }
   };
 
-  const setUsersTableData = async () => {
-    const data = await api.getAllNonAdminUsers(token);
-    setUsers(data);
-  };
+  useEffect(() => {
+    const setUsersTableData = async () => {
+      const data = await api.getAllNonAdminUsers(userData.token);
+      setUsers(data);
+    };
+    setUsersTableData();
+  }, []);
 
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem('user'));
-    if (userData.role !== 'administrator') history.push('/verificar uma rota');
-    setToken(userData.token);
     handleButtonActivation();
-    setUsersTableData();
-  }, [name, email, password, validEmail, history, users]);
+  }, [name, email, password, validEmail, history]);
 
   const renderRegisterForm = () => {
     return (
@@ -82,19 +87,19 @@ function Admin() {
           value={ role }
           data-testid="admin_manage__select-role"
         >
-          <option value="Vendedor">Vendedor</option>
-          <option value="Usuario">Usuario</option>
-          <option value="Administrador">Adminsitrador</option>
+          <option value="Seller">Seller</option>
+          <option value="Customer">Customer</option>
+          <option value="Administrator">Administrator</option>
         </select>
         <Button
           text="Cadastrar"
           type="button"
           testId="admin_manage__button-register"
           isDisabled={ buttonDisabled }
-          action={ (e) => handleSubmit(e) }
+          action={ () => handleSubmit() }
         />
       </form>
-    )
+    );
   };
 
   const renderUserTable = () => {
@@ -113,17 +118,17 @@ function Admin() {
           {
             users.map((user, index) => (
               <tr key={ index }>
-                <td data-testid={`admin_manage__element-user-table-item-number-${index}`}>{user.id}</td>
-                <td data-testid={`admin_manage__element-user-table-name-${index}`}>{user.name}</td>
-                <td data-testid={`admin_manage__element-user-table-email-${index}`}>{user.email}</td>
-                <td data-testid={`admin_manage__element-user-table-role-${index}`}>{user.role}</td>
-                <td data-testid={`admin_manage__element-user-table-remove-${index}`}>Botao excluir</td>
+                <td data-testid={ `${testUser}-${index}` }>{user.id}</td>
+                <td data-testid={ `${testName}-${index}` }>{user.name}</td>
+                <td data-testid={ `${testEmail}-${index}` }>{user.email}</td>
+                <td data-testid={ `${testRole}-${index}` }>{user.role}</td>
+                <td data-testid={ `${testRemove}-${index}` }>Botao excluir</td>
               </tr>
             ))
           }
         </tbody>
       </table>
-    )
+    );
   };
 
   return (
