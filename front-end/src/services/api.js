@@ -49,6 +49,16 @@ const getSales = async (token) => {
   return data;
 };
 
+const getSaleById = async (token, id) => {
+  const { data } = await axios.get(`${baseUrl}/sale/${id}`, {
+    headers: {
+      authorization: token,
+    },
+  });
+
+  return data;
+};
+
 export default {
   login,
   getProducts,
@@ -56,4 +66,5 @@ export default {
   adminRegister,
   getAllNonAdminUsers,
   getSales,
+  getSaleById,
 };
