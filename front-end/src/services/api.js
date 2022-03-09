@@ -49,6 +49,12 @@ const getSales = async (token) => {
   return data;
 };
 
+const getUserByEmail = async (email) => {
+  const user = await axios.get(`${baseUrl}/user/${email}`);
+
+  return user;
+};
+
 export default {
   login,
   getProducts,
@@ -56,4 +62,5 @@ export default {
   adminRegister,
   getAllNonAdminUsers,
   getSales,
+  getUserByEmail,
 };

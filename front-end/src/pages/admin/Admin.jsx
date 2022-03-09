@@ -18,6 +18,7 @@ function Admin() {
   const [role, setRole] = useState('Vendedor');
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [users, setUsers] = useState([]);
+  const [userExists, setUserExists] = useState(false);
   const history = useHistory();
   const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const userData = JSON.parse(localStorage.getItem('user'));
@@ -30,7 +31,13 @@ function Admin() {
   };
 
   const handleSubmit = async () => {
-    await api.adminRegister(name, email, password, role, userData.token);
+    try {
+      await api.adminRegister(name, email, password, role, userData.token);
+      location.reload();
+    } catch (err) {
+      console.log(err);
+      setUserExists(true);
+    }
   };
 
   useEffect(() => {
@@ -129,6 +136,8 @@ function Admin() {
       </table>
     );
   }
+
+  if (userExists) return <p data-testid="admin_manage__element-invalid-register"> Usuario ja existe</p>
 
   return (
     <div className="wrapper">
