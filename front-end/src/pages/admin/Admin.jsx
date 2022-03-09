@@ -24,10 +24,13 @@ function Admin() {
   const userData = JSON.parse(localStorage.getItem('user'));
 
   const handleChange = ({ target: { type, value } }) => {
-    if (type === 'text') setName(value);
-    if (type === 'email') setEmail(value);
-    if (type === 'password') setPassword(value);
-    if (type === 'select-one') setRole(value);
+    const object = {
+      text: (info) => setName(info),
+      email: (info) => setEmail(info),
+      password: (info) => setPassword(info),
+      'select-one': (info) => setRole(info),
+    };
+    object[type](value);
   };
 
   const handleSubmit = async () => {
@@ -138,8 +141,8 @@ function Admin() {
   }
 
   if (userExists) {
-    return <p data-testid="admin_manage__element-invalid-register"> Usuario ja existe</p>
-  };
+    return <p data-testid="admin_manage__element-invalid-register"> Usuario ja existe</p>;
+  }
 
   return (
     <div className="wrapper">

@@ -38,7 +38,10 @@ function NavBar({ userName, role, links }) {
 }
 
 NavBar.propTypes = {
-  links: PropTypes.arrayOf(PropTypes.object).isRequired,
+  links: PropTypes.arrayOf(PropTypes.shape({
+    url: PropTypes.string,
+    name: PropTypes.string,
+  })).isRequired,
   role: PropTypes.string.isRequired,
   userName: PropTypes.string.isRequired,
 };

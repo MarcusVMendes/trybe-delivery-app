@@ -5,6 +5,7 @@ import ProductsProvider from './context/ProductsProvider';
 import Login from './pages/login/Login';
 import Products from './pages/products/Products';
 import Register from './pages/register/Register';
+import Checkout from './pages/checkout/Checkout';
 import Admin from './pages/admin/Admin';
 import Orders from './pages/orders/Orders';
 import CustomerOrderDetails from './pages/details/CustomerOrderDetails';
@@ -22,6 +23,7 @@ function App() {
 
         <ProductsProvider>
           <Route path="/customer/products" component={ Products } />
+          <Route path="/customer/checkout" component={ Checkout } />
           <Route exact path="/customer/orders" component={ Orders } />
           <Route exact path="/customer/orders/:id" component={ CustomerOrderDetails } />
         </ProductsProvider>

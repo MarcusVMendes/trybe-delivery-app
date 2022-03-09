@@ -28,12 +28,13 @@ function Input({ label, name, type, placeholder, testId, handleChange, value }) 
 Input.defaultProps = {
   value: '',
   name: '',
+  placeholder: '',
 };
 
 Input.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string,
-  placeholder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   type: PropTypes.string.isRequired,
   testId: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
