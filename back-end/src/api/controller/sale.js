@@ -15,9 +15,10 @@ const createSaleController = rescue(async (req, res) => {
   const dataSale = req.body;
   const { id: userId } = req.user;
 
-  await createSaleService(dataSale, userId);
+  const { dataValues } = await createSaleService(dataSale, userId);
+  console.log(dataValues);
 
-  return res.status(CREATED).json({ message: 'Venda criada' });
+  return res.status(CREATED).json({ dataValues });
 });
 
 const getSalesController = rescue(async (_req, res) => {

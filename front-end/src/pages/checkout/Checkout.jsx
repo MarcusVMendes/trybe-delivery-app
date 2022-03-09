@@ -158,7 +158,7 @@ function Checkout() {
               type="button"
               isDisabled={ false }
               action={
-                () => finalizeOrder(totalPrice, adress, number, 'pendente', cart, 2)
+                () => finalizeOrder(totalPrice, adress, number, 'Pendente', cart, 2)
               }
             />
           </div>
