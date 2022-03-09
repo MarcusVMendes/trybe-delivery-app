@@ -80,7 +80,7 @@ export default {
   register,
   insertSale,
   getSales,
-  getSalesById,
+  getSaleById,
   adminRegister,
   getAllNonAdminUsers,
 };
