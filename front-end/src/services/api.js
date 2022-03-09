@@ -26,15 +26,13 @@ const getProducts = async () => {
 const getOrders = async (token) => {
   const headers = { authorization: token }
   const { data } = await axios.get(`${baseUrl}/sale`, { headers });
-  // const { products } = data;
 
   return data;
 };
 
 const getOrderById = async (token, id) => {
   const headers = { authorization: token }
-  const { data } = await axios.get(`${baseUrl}/sale/${id}`, { headers });
-  // const { products } = data;
+  const data = await axios.get(`${baseUrl}/sale/${id}`, { headers });
 
   return data;
 };
