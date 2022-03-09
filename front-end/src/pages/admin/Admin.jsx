@@ -33,7 +33,7 @@ function Admin() {
   const handleSubmit = async () => {
     try {
       await api.adminRegister(name, email, password, role, userData.token);
-      location.reload();
+      // location.reload();
     } catch (err) {
       console.log(err);
       setUserExists(true);
@@ -137,7 +137,9 @@ function Admin() {
     );
   }
 
-  if (userExists) return <p data-testid="admin_manage__element-invalid-register"> Usuario ja existe</p>
+  if (userExists) {
+    return <p data-testid="admin_manage__element-invalid-register"> Usuario ja existe</p>
+  };
 
   return (
     <div className="wrapper">
