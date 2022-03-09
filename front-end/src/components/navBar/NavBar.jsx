@@ -6,7 +6,7 @@ function NavBar({ userName, role, links }) {
   const isCustomer = role === 'customer';
   const baseUrl = 'http://localhost:3000/';
   const orders = 'customer_products__element-navbar-link-orders';
-  const orderLink = <a href={ links[1].url } data-testid={ orders }>{ links[1].name }</a>;
+  // const orderLink = <a href={ links[1].url } data-testid={ orders }>{ links[1].name }</a>;
 
   return (
     <header>
@@ -18,7 +18,7 @@ function NavBar({ userName, role, links }) {
           >
             { links[0].name }
           </a>
-          {isCustomer && orderLink}
+          {isCustomer && <a href={ links[1].url } data-testid={ orders }>{ links[1].name }</a>}
         </div>
         <div>
           <p data-testid="customer_products__element-navbar-user-full-name">
