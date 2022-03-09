@@ -22,6 +22,7 @@ const register = async (name, email, password, role = 'customer') => {
 
   return data;
 };
+
 const insertSale = async (token, ...infoSale) => {
   const [
     totalPrice, deliveryAddress, deliveryNumber, status, products, sellerId,

@@ -26,7 +26,7 @@ function Checkout() {
       const [
         totalPrice, deliveryAddress, deliveryNumber, status, products, sellerId,
       ] = infoSale;
-      const { dataValues } = await api.insertSale(
+      const dataValues = await api.insertSale(
         token, totalPrice, deliveryAddress, deliveryNumber, status, products, sellerId,
       );
       console.log(dataValues);
