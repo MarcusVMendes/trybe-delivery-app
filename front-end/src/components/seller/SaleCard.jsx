@@ -1,43 +1,66 @@
 import React from 'react';
-import './OrderCard.css';
 import PropTypes from 'prop-types';
-import OrderStatus from '../orderStatus/OrderStatus';
 import './SaleCard.css';
 
 function SaleCard(props) {
-  const  { orderNumber, status, date, price, address, id } = props.order;
+  const  {
+    deliveryNumber,
+    status,
+    saleDate,
+    totalPrice,
+    deliveryAddress,
+    id
+  } = props.order;
+
   return (
     <a href={ `localhost:3000/seller/orders/${id}` }>
-      <div className="order-card">
+      <div className="sale-card">
         <p>Pedido</p>
+
         <span
-          data-testid={ `customer_orders__element-order-id-${id}` }
+          data-testid={ `seller_orders__element-order-id-${id}` }
         >
-          { orderNumber }
+          { deliveryNumber }
         </span>
-        <OrderStatus id={ id } status={ status } />
+
         <p
-          data-testid={ `customer_orders__element-order-date-${id}` }
+          data-testid={ `seller_orders__delivery-status-${id}` }
         >
-          { date }
+          { status }
         </p>
-        <p>{ `R$ ${price}` }</p>
-        <span>{ address }</span>
+
+        <p
+          data-testid={ `seller_orders__element-order-date-${id}` }
+        >
+          { saleDate }
+        </p>
+
+        <p
+          data-testId={`seller_orders__element-card-address-${id}`}
+        >
+          { `R$ ${totalPrice}` }
+        </p>
+
+        <span
+          data-testid={`seller_orders__element-card-address-${id}`}
+        >
+          { deliveryAddress }
+        </span>
       </div>
     </a>
   );
 }
 
 SaleCard.defaultProps = {
-  address: '',
+  deliveryAddress: '',
 };
 
 SaleCard.propTypes = {
-  orderNumber: PropTypes.number.isRequired,
+  deliveryNumber: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  address: PropTypes.string,
+  saleDate: PropTypes.string.isRequired,
+  totalPrice: PropTypes.number.isRequired,
+  deliveryAddress: PropTypes.string,
   id: PropTypes.number.isRequired,
 };
 
