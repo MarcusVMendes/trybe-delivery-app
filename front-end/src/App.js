@@ -10,7 +10,7 @@ import Admin from './pages/admin/Admin';
 import Orders from './pages/orders/Orders';
 import CustomerOrderDetails from './pages/details/CustomerOrderDetails';
 import SellerOrders from './pages/seller/SellerOrders';
-import OrderDetails from './pages/seller/OrderDetails';
+import SaleDetails from './pages/seller/SaleDetails';
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
         <Route path="/register" component={ Register } />
         <Route path="/admin/manage" component={ Admin } />
         <Route exact path="/seller/orders" component={ SellerOrders } />
-        <Route path="/seller/orders/:id" component={ OrderDetails } />
+        <Route path="/seller/orders/:id" component={ SaleDetails } />
         <ProductsProvider>
           <Route path="/customer/products" component={ Products } />
           <Route path="/customer/checkout" component={ Checkout } />
