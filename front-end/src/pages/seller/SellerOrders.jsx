@@ -1,37 +1,37 @@
 import React, { useEffect, useState } from 'react';
-// import { useHistory } from 'react-router-dom';
 import api from '../../services/api';
 import NavBar from '../../components/navBar/NavBar';
-import OrderCard from '../../components/orderCard/OrderCard';
+import SaleCard from '../../components/seller/SaleCard';
 
-const ordersMock = [
+const sales = [
   {
-    id: 1,
-    orderNumber: 1,
-    status: 'Pendente',
-    date: '03/03/2022',
-    price: 10,
-    address: 'Rua tal, numero 1'
+  totalPrice: 5.50,
+  deliveryAddress: "R. Sollar",
+  deliveryNumber: "8",
+  status: "Pendente",
+  sellerId: 2,
+  products: [
+      {productId: 10, quantity: 3 },
+      {productId: 9, quantity: 3 },
+      {productId: 8, quantity: 3 }
+    ]
   },
   {
-    id: 2,
-    orderNumber: 2,
-    status: 'Pendente',
-    date: '03/03/2022',
-    price: 10,
-    address: 'Rua tal, numero 1'
-  }
-];
-
-const links = [
-  {
-    name: 'PEDIDOS',
-    url: 'http://localhost:3000/seller/orders',
-  },
-];
+    totalPrice: 5.50,
+    deliveryAddress: "R. Sollar",
+    deliveryNumber: "8",
+    status: "Entregue",
+    sellerId: 2,
+    products: [
+        {productId: 10, quantity: 3 },
+        {productId: 9, quantity: 3 },
+        {productId: 8, quantity: 3 }
+      ]
+    }
+]
 
 function SellerOrders() {
-  const [orders, setOrders] = useState([]);
+  // const [orders, setOrders] = useState([]);
   const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
@@ -47,15 +47,20 @@ function SellerOrders() {
     fetchOrders();
   }, []);
 
-  console.log(orders)
+  // console.log(orders)
 
-  if (!orders) return <p>Carregando vendas...</p>;
+  // if (!orders) return <p>Carregando vendas...</p>;
 
   return (
     <>
-      <NavBar userName={user.name} role={user.role} links={links} />
+      {/* <NavBar userName={user.name} role={user.role} links={links} /> */}
       <div>
-        {ordersMock.map((order) => (<OrderCard key={ order.id } order={ order } />))}
+        {sales.map((order) => (
+            <SaleCard
+              key={ order.id }
+              order={ order }
+              role={user.role} 
+            />))}
       </div>
     </>
   );
