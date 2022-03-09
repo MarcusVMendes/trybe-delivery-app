@@ -23,6 +23,21 @@ const register = async (name, email, password, role = 'customer') => {
   return data;
 };
 
+const insertSale = async (token, ...infoSale) => {
+  const [
+    totalPrice, deliveryAddress, deliveryNumber, status, products, sellerId,
+  ] = infoSale;
+  const { data } = await axios.post(`${baseUrl}/sale`, {
+    totalPrice, deliveryAddress, deliveryNumber, status, products, sellerId,
+  }, {
+    headers: {
+      authorization: token,
+    },
+  });
+
+  return data;
+};
+
 const adminRegister = async (...params) => {
   const [name, email, password, role = 'customer', token] = params;
   const body = { name, email, password, role };
@@ -63,8 +78,9 @@ export default {
   login,
   getProducts,
   register,
+  insertSale,
+  getSales,
+  getSalesById,
   adminRegister,
   getAllNonAdminUsers,
-  getSales,
-  getSaleById,
 };
