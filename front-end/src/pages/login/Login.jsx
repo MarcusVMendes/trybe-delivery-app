@@ -8,11 +8,17 @@ import api from '../../services/api';
 
 function Login() {
   const history = useHistory();
+  const user = JSON.parse(localStorage.getItem('user'));
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState(false);
   const PASSWORD_MIN_LENGTH = 6;
   const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const checkLogin = () => {
+    if (user && user.role === 'customer') history.push('/customer/products');
+    if (user && user.role === 'administrator') history.push('/admin/manage');
+  };
 
   const handleChange = ({ target }) => {
     const { value, type } = target;
@@ -41,6 +47,8 @@ function Login() {
     if (login && secret.length >= PASSWORD_MIN_LENGTH) return false;
     return true;
   };
+
+  checkLogin();
 
   return (
     <Container>
