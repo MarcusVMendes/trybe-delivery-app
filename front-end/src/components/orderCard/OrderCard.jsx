@@ -42,7 +42,7 @@ OrderCard.propTypes = {
   orderNumber: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
+  price: PropTypes.string.isRequired,
   address: PropTypes.string,
   id: PropTypes.number.isRequired,
 };
