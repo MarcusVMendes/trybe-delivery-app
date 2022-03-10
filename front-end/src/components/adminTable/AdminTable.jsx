@@ -38,12 +38,7 @@ function AdminTable(props) {
 }
 
 AdminTable.propTypes = {
-  users: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    role: PropTypes.string.isRequired,
-  }).isRequired,
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default AdminTable;
