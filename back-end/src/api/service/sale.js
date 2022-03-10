@@ -31,7 +31,6 @@ const createSaleService = async (dataSale, userId) => {
 
 const getSalesService = async () => {
   const sales = await Sale.findAll({
-    attributes: { exclude: ['deliveryAddress', 'deliveryNumber'] },
     include: [
       { model: User, as: 'user', attributes: ['id', 'name'] },
       { model: User, as: 'seller', attributes: ['id', 'name'] },
