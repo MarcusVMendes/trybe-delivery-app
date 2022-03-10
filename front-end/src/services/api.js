@@ -64,6 +64,12 @@ const getSales = async (token) => {
   return data;
 };
 
+const getUserByEmail = async (email) => {
+  const user = await axios.get(`${baseUrl}/user/${email}`);
+
+  return user;
+};
+
 const getSaleById = async (token, id) => {
   const { data } = await axios.get(`${baseUrl}/sale/${id}`, {
     headers: {
@@ -80,7 +86,8 @@ export default {
   register,
   insertSale,
   getSales,
-  getSalesById,
+  getSaleById,
   adminRegister,
   getAllNonAdminUsers,
+  getUserByEmail,
 };

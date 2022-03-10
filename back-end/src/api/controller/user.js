@@ -7,6 +7,7 @@ const {
 const {
   getUserLoginService,
   registerNewUserService,
+  getUserByEmailService,
 } = require('../service/user');
 
 const getUserLoginController = rescue(async (req, res) => {
@@ -21,7 +22,14 @@ const registerNewUserController = rescue(async (req, res) => {
   return res.status(CREATED).json(user);
 });
 
+const getUserByEmailController = rescue(async (req, res) => {
+  const { email } = req.params;
+  const user = await getUserByEmailService(email);
+  return res.status(OK).json(user);
+});
+
 module.exports = {
   getUserLoginController,
   registerNewUserController,
+  getUserByEmailController,
 };

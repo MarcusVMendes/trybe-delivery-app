@@ -15,7 +15,7 @@ const createSaleController = rescue(async (req, res) => {
   const dataSale = req.body;
   const { id: userId } = req.user;
 
-  const { dataValues }  = await createSaleService(dataSale, userId);
+  const { dataValues } = await createSaleService(dataSale, userId);
 
   return res.status(CREATED).json(dataValues);
 });

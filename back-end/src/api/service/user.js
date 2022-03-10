@@ -51,7 +51,14 @@ const registerNewUserService = async (name, email, password, role) => {
   };
 };
 
+const getUserByEmailService = async (email) => {
+  const user = await User.findOne({ where: { email } });
+  if (!user) throw errorMessage(NOT_FOUND, NOT_FOUND_MSG);
+  return user;
+};
+
 module.exports = {
   getUserLoginService,
   registerNewUserService,
+  getUserByEmailService,
 };
