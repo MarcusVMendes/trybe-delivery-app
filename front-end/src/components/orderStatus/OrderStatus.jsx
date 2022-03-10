@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 function OrderStatus({ status, id }) {
   return (
-    <div>
-      <p data-testid={ `customer_orders__element-delivery-status-${id}` }>
+    <div data-testid={ `customer_orders__element-delivery-status-${id}` }>
+      <p>
         { status }
       </p>
     </div>
