@@ -38,9 +38,8 @@ function AdminTable(props) {
 }
 
 AdminTable.propTypes = {
-  users: PropTypes.shape({
-    map: PropTypes.func,
-  }),
+  users: PropTypes.objectOf(PropTypes.node).isRequired,
+  map: PropTypes.func,
 };
 
 export default AdminTable;
