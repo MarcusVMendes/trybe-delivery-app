@@ -25,6 +25,20 @@ function Orders() {
     fetchSales();
   }, [user]);
 
+  const convertDate = (date) => {
+    // se alguém tiver uma sugestão de função pra convertar data que está em formato ISO
+    // vai ser muito bem vindo... só consegui pensar nisso rs
+    const EIGHT = 8;
+    const FIVE = 5;
+    const FOUR = 4;
+
+    const day = date.substr(EIGHT, 2);
+    const month = date.substr(FIVE, 2);
+    const year = date.substr(0, FOUR);
+
+    return `${day}/${month}/${year}`;
+  };
+
   return (
     <>
       <NavBar
@@ -32,7 +46,7 @@ function Orders() {
         role={ user.role }
         links={ customerLinks }
       />
-      { orders.length === 0 && <p>Você ainda fez um pedido</p> }
+      { orders.length === 0 && <p>Você ainda não fez um pedido</p> }
       <div className="orders-container">
         {
           orders.map(({ id, status, saleDate, totalPrice }) => (
@@ -40,7 +54,7 @@ function Orders() {
               key={ id }
               orderNumber={ id }
               status={ status }
-              date={ saleDate }
+              date={ convertDate(saleDate) }
               price={ totalPrice }
               id={ id }
             />

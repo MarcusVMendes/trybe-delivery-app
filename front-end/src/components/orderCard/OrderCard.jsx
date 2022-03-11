@@ -24,7 +24,11 @@ function OrderCard({ orderNumber, status, date, price, address, id }) {
       >
         { date }
       </p>
-      <p>{ `R$ ${price}` }</p>
+      <p
+        data-testid={ `customer_orders__element-card-price-${id}` }
+      >
+        { price.replace('.', ',') }
+      </p>
       <span>{ address }</span>
     </button>
   );
@@ -38,7 +42,7 @@ OrderCard.propTypes = {
   orderNumber: PropTypes.number.isRequired,
   status: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
+  price: PropTypes.string.isRequired,
   address: PropTypes.string,
   id: PropTypes.number.isRequired,
 };
