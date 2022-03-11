@@ -1,10 +1,14 @@
 const frisby = require('frisby');
 const { expect } = require('chai');
 
-describe('', () => {
+describe('POST /sale', () => {
   it('', () => {});
 });
 
-describe('', () => {
+describe('GET /sale', () => {
+  it('', () => {});
+});
+
+describe('GET /sale/:id', () => {
   it('', () => {});
 });
