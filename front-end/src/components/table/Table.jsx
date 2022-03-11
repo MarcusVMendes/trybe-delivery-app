@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../services/api';
-import OrderStatus from '../orderStatus/OrderStatus';
 
 function Table() {
   const id = window.location.pathname.replace('/customer/orders/', '');
@@ -18,6 +17,20 @@ function Table() {
 
     fetchSale();
   }, [user, id]);
+
+  const convertDate = (date) => {
+    // se alguém tiver uma sugestão de função pra convertar data que está em formato ISO
+    // vai ser muito bem vindo... só consegui pensar nisso rs
+    const EIGHT = 8;
+    const FIVE = 5;
+    const FOUR = 4;
+
+    const day = date.substr(EIGHT, 2);
+    const month = date.substr(FIVE, 2);
+    const year = date.substr(0, FOUR);
+
+    return `${day}/${month}/${year}`;
+  };
 
   const checkStatus = (status) => status !== 'Em Trânsito';
 
@@ -41,12 +54,13 @@ function Table() {
       <span
         data-testid={ `${tableHeaderTestIdPrefix}-order-date` }
       >
-        { saleDate }
+        { convertDate(saleDate) }
       </span>
-      <OrderStatus
-        status={ status }
-        id={ orderId }
-      />
+      <p
+        data-testid={ `${tableHeaderTestIdPrefix}-delivery-status` }
+      >
+        { status }
+      </p>
       <button
         type="button"
         data-testid="customer_order_details__button-delivery-check"
@@ -88,10 +102,13 @@ function Table() {
               <td
                 data-testid={ `${tableTestIdPrefix}-total-price-${index}` }
               >
-                { (prod.SaleProduct.quantity * prod.price).toFixed(2) }
+                { (prod.SaleProduct.quantity * prod.price).toFixed(2).replace('.', ',') }
               </td>
             </tr>
           ))}
+          <p data-testid={ `${tableTestIdPrefix}-total-price` }>
+            { order[0].totalPrice.replace('.', ',') }
+          </p>
         </tbody>
       </table>
     </section>
