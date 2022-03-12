@@ -30,20 +30,42 @@ const {
 
 describe('POST /sale', () => {
   describe('Valida que não é possível criar uma venda sem estar autenticado', () => {
-    it.only('Será validado que não é permitido criar uma venda sem um token', async () => {
+    it('Será validado que não é permitido criar uma venda sem um token', async () => {
       await frisby
-        .post(`${URL}/user/login`, LOGIN_MOCK)
-        .then(() => frisby
-          .post(`${URL}/sale`, SALE_MOCK)
-          .expect('status', UNAUTHORIZED)
-          .then((responseCreate) => {
-            const { json } = responseCreate;
-
-            expect(json.message).to.be.eq(UNAUTHORIZED_TOKEN);
-          })
+        .post(`${URL}${ROUTE_LOGIN}`, LOGIN_MOCK)
+        .then(() =>
+          frisby
+            .post(`${URL}${ROUTE_SALE}`, SALE_MOCK)
+            .expect('status', UNAUTHORIZED)
+            .then((responseCreate) => {
+              const { json } = responseCreate;
+              expect(json.message).to.be.eq(UNAUTHORIZED_TOKEN);
+            })
         )
     });
-    it('Será validado que não é permitido criar uma venda com token expirado ou inválido', async () => {});
+
+    it.only('Será validado que não é permitido criar uma venda com token expirado ou inválido', async () => {
+      await frisby
+        .post(`${URL}${ROUTE_LOGIN}`, LOGIN_MOCK)
+        .then(() => 
+          frisby
+            .setup({
+              request: {
+                headers: {
+                  Authorization: 19021987,
+                  'Content-Type': 'application/json',
+                },
+              },
+            })
+            .post(`${URL}${ROUTE_SALE}`, SALE_MOCK)
+            .expect('status', UNAUTHORIZED)
+            .then((responseCreate) => {
+              const { json } = responseCreate;
+              expect(json.message).to.be.eq(UNAUTHORIZED_TOKEN_INVALID);
+            })
+        )
+    });
+
   });
 
   describe('Valida se todos os campos obrigatórios são enviados corretamente ao tentar criar uma nova venda', () => {
