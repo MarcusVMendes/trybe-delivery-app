@@ -22,19 +22,24 @@ const LOGIN_MOCK = {
 	password: '$#zebirita#$',
 };
 
+const {
+  UNAUTHORIZED,
+  UNAUTHORIZED_TOKEN,
+  UNAUTHORIZED_TOKEN_INVALID,
+} = require('../api/utils/dictionary');
+
 describe('POST /sale', () => {
   describe('Valida que não é possível criar uma venda sem estar autenticado', () => {
     it.only('Será validado que não é permitido criar uma venda sem um token', async () => {
       await frisby
-        .post(`${URL}${ROUTE_LOGIN}`, LOGIN_MOCK)
+        .post(`${URL}/user/login`, LOGIN_MOCK)
         .then(() => frisby
-          .post(`${URL}${ROUTE_SALE}`, SALE_MOCK)
-          .expect('status', 401)
+          .post(`${URL}/sale`, SALE_MOCK)
+          .expect('status', UNAUTHORIZED)
           .then((responseCreate) => {
             const { json } = responseCreate;
-            // const result = JSON.parse(body);
 
-            expect(json.message).to.be.eq('Token not found');
+            expect(json.message).to.be.eq(UNAUTHORIZED_TOKEN);
           })
         )
     });
