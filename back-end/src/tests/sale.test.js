@@ -24,10 +24,21 @@ const LOGIN_MOCK = {
 
 describe('POST /sale', () => {
   describe('Valida que não é possível criar uma venda sem estar autenticado', () => {
-    it('Será validado que não é permitido criar uma venda com token expirado ou inválido', async () => {
+    it.only('Será validado que não é permitido criar uma venda sem um token', async () => {
+      await frisby
+        .post(`${URL}${ROUTE_LOGIN}`, LOGIN_MOCK)
+        .then(() => frisby
+          .post(`${URL}${ROUTE_SALE}`, SALE_MOCK)
+          .expect('status', 401)
+          .then((responseCreate) => {
+            const { json } = responseCreate;
+            // const result = JSON.parse(body);
 
+            expect(json.message).to.be.eq('Token not found');
+          })
+        )
     });
-    it('Será validado que não é permitido criar uma venda sem um token', async () => {});
+    it('Será validado que não é permitido criar uma venda com token expirado ou inválido', async () => {});
   });
 
   describe('Valida se todos os campos obrigatórios são enviados corretamente ao tentar criar uma nova venda', () => {
