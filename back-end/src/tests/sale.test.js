@@ -1,7 +1,10 @@
 const frisby = require('frisby');
 const { expect } = require('chai');
 
-const URL = 'http://localhost:3001/sale';
+const URL = 'http://localhost:3001';
+const ROUTE_SALE = '/sale';
+const ROUTE_SALE_ID = '/sale/:id';
+const ROUTE_LOGIN = '/user/login';
 const SALE_MOCK = {
 	totalPrice: 1540.99,
 	deliveryAddress: 'R. Lunnar',
