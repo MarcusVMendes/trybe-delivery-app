@@ -1,9 +1,29 @@
 const frisby = require('frisby');
 const { expect } = require('chai');
 
+const URL = 'http://localhost:3001/sale';
+const SALE_MOCK = {
+	totalPrice: 1540.99,
+	deliveryAddress: 'R. Lunnar',
+	deliveryNumber: '895',
+	status: 'Pendente',
+	sellerId: 2,
+	products: [
+    { productId: 8, quantity: 2 },
+    { productId: 5, quantity: 25 },
+    { productId: 1, quantity: 12 },
+  ],
+};
+const LOGIN_MOCK = {
+	email: 'zebirita@email.com',
+	password: '$#zebirita#$',
+};
+
 describe('POST /sale', () => {
   describe('Valida que não é possível criar uma venda sem estar autenticado', () => {
-    it('Será validado que não é permitido criar uma venda com token expirado ou inválido', async () => {});
+    it('Será validado que não é permitido criar uma venda com token expirado ou inválido', async () => {
+
+    });
     it('Será validado que não é permitido criar uma venda sem um token', async () => {});
   });
 
