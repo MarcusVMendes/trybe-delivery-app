@@ -70,7 +70,7 @@ describe('POST /sale', () => {
 
   });
 
-  describe.only('Valida se todos os campos obrigatórios são enviados corretamente ao tentar criar uma nova venda', () => {
+  describe('Valida se todos os campos obrigatórios são enviados corretamente ao tentar criar uma nova venda', () => {
     it('Será validado que não é possível criar uma venda sem o campo totalPrice', async () => {
       await frisby
         .post(`${URL}${ROUTE_LOGIN}`, LOGIN_MOCK)
@@ -266,9 +266,30 @@ describe('POST /sale', () => {
     });
   });
 
-  describe('Valida se é possível criar uma venda com sucesso quando todos os campos são enviados corretamente', () => {
+  describe.only('Valida se é possível criar uma venda com sucesso quando todos os campos são enviados corretamente', () => {
     it('Será validado que a venda foi criada com sucesso', async () => {
       // verificar se os atributos aparecem no retorno e se o status da requisição é CREATED
+      await frisby
+      .post(`${URL}${ROUTE_LOGIN}`, LOGIN_MOCK)
+      .then((responseLogin) => {
+        const { json } = responseLogin;
+        return frisby
+          .setup({
+            request: {
+              headers: {
+                Authorization: json.token,
+                'Content-type': 'application/json',
+              },
+            },
+          })
+          .post(`${URL}${ROUTE_SALE}`, SALE_MOCK)
+          .expect('status', CREATED)
+          .then((responseCreate) => {
+            const { json } = responseCreate;
+            expect(json).to.have.property('id');
+            expect(json).to.have.property('saleDate');
+          })
+      })
     });
   });
 });
