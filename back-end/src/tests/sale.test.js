@@ -26,6 +26,8 @@ const {
   UNAUTHORIZED,
   UNAUTHORIZED_TOKEN,
   UNAUTHORIZED_TOKEN_INVALID,
+  CREATED,
+  BAD_REQUEST,
 } = require('../api/utils/dictionary');
 
 describe('POST /sale', () => {
@@ -44,7 +46,7 @@ describe('POST /sale', () => {
         )
     });
 
-    it.only('Será validado que não é permitido criar uma venda com token expirado ou inválido', async () => {
+    it('Será validado que não é permitido criar uma venda com token expirado ou inválido', async () => {
       await frisby
         .post(`${URL}${ROUTE_LOGIN}`, LOGIN_MOCK)
         .then(() => 
@@ -69,12 +71,43 @@ describe('POST /sale', () => {
   });
 
   describe('Valida se todos os campos obrigatórios são enviados corretamente ao tentar criar uma nova venda', () => {
-    it('Será validado que não é possível criar um venda sem o campo totalPrice', async () => {});
-    it('Será validado que não é possível criar um venda sem o campo deliveryAddress', async () => {});
-    it('Será validado que não é possível criar um venda sem o campo deliveryNumber', async () => {});
-    it('Será validado que não é possível criar um venda sem o campo status', async () => {});
-    it('Será validado que não é possível criar um venda sem o campo products', async () => {});
-    it('Será validado que não é possível criar um venda sem o campo sellerId', async () => {});
+    it.only('Será validado que não é possível criar uma venda sem o campo totalPrice', async () => {
+      await frisby
+        .post(`${URL}${ROUTE_LOGIN}`, LOGIN_MOCK)
+        .then((responseLogin) => {
+          const { json } = responseLogin;
+          return frisby
+            .setup({
+              request: {
+                headers: {
+                  Authorization: json.token,
+                  'Content-type': 'application/json',
+                },
+              },
+            })
+            .post(`${URL}${ROUTE_SALE}`, {
+              deliveryAddress: 'R. Lunnar',
+              deliveryNumber: '895',
+              status: 'Pendente',
+              sellerId: 2,
+              products: [
+                { productId: 8, quantity: 2 },
+                { productId: 5, quantity: 25 },
+                { productId: 1, quantity: 12 },
+              ],
+            })
+            .expect('status', BAD_REQUEST)
+            .then((responseCreate) => {
+              const { json } = responseCreate;
+              expect(json.message).to.be.eql('"totalPrice" is required');
+            })
+        })
+    });
+    it('Será validado que não é possível criar uma venda sem o campo deliveryAddress', async () => {});
+    it('Será validado que não é possível criar uma venda sem o campo deliveryNumber', async () => {});
+    it('Será validado que não é possível criar uma venda sem o campo status', async () => {});
+    it('Será validado que não é possível criar uma venda sem o campo products', async () => {});
+    it('Será validado que não é possível criar uma venda sem o campo sellerId', async () => {});
   });
 
   describe('Valida se é possível criar uma venda com sucesso quando todos os campos são enviados corretamente', () => {
