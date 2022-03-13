@@ -17,7 +17,7 @@ const SALE_MOCK = {
     { productId: 1, quantity: 12 },
   ],
 };
-const SALE_ID = 1;
+const SALE_ID = 3;
 const LOGIN_MOCK = {
 	email: 'zebirita@email.com',
 	password: '$#zebirita#$',
@@ -323,7 +323,7 @@ describe('GET /sale', () => {
   })
 });
 
-describe.only('GET /sale/:id', () => {
+describe('GET /sale/:id', () => {
   describe('Valida se uma venda é listada através do seu ID', () => {
     it('Será validado que, ao estar autenticado e acessar a rota com ID da venda, ela é listada', async () => {
       await frisby
