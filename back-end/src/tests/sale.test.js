@@ -231,7 +231,39 @@ describe('POST /sale', () => {
           })
       })
     });
-    it('Será validado que não é possível criar uma venda sem o campo sellerId', async () => {});
+
+    it('Será validado que não é possível criar uma venda sem o campo sellerId', async () => {
+      await frisby
+      .post(`${URL}${ROUTE_LOGIN}`, LOGIN_MOCK)
+      .then((responseLogin) => {
+        const { json } = responseLogin;
+        return frisby
+          .setup({
+            request: {
+              headers: {
+                Authorization: json.token,
+                'Content-type': 'application/json',
+              },
+            },
+          })
+          .post(`${URL}${ROUTE_SALE}`, {
+            totalPrice: 123.90,
+            deliveryAddress: 'R. Lunnar',
+            deliveryNumber: '895',
+            status: 'Pendente',
+            products: [
+              { productId: 8, quantity: 2 },
+              { productId: 5, quantity: 25 },
+              { productId: 1, quantity: 12 },
+            ],
+          })
+          .expect('status', BAD_REQUEST)
+          .then((responseCreate) => {
+            const { json } = responseCreate;
+            expect(json.message).to.be.eql('"sellerId" is required');
+          })
+      })
+    });
   });
 
   describe('Valida se é possível criar uma venda com sucesso quando todos os campos são enviados corretamente', () => {
