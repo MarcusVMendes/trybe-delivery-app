@@ -28,6 +28,7 @@ const {
   UNAUTHORIZED_TOKEN_INVALID,
   CREATED,
   BAD_REQUEST,
+  OK,
 } = require('../api/utils/dictionary');
 
 describe('POST /sale', () => {
@@ -286,8 +287,8 @@ describe('POST /sale', () => {
           .expect('status', CREATED)
           .then((responseCreate) => {
             const { json } = responseCreate;
-            expect(json).to.have.property('id');
-            expect(json).to.have.property('saleDate');
+            expect(json).to.have.all.keys('id', 'saleDate', 'totalPrice', 'deliveryAddress', 
+            'deliveryNumber', 'sellerId', 'status', 'userId');
           })
       })
     });
@@ -296,7 +297,28 @@ describe('POST /sale', () => {
 
 describe('GET /sale', () => {
   describe('Valida se todas as vendas são listadas', () => {
-    it('Será validado que, ao estar autenticado e acessar a rota, todas as vendas são listadas', async () => {});
+    it('Será validado que, ao estar autenticado e acessar a rota, todas as vendas são listadas', async () => {
+      await frisby
+      .post(`${URL}${ROUTE_LOGIN}`, LOGIN_MOCK)
+      .then((responseLogin) => {
+        const { json } = responseLogin;
+        return frisby
+          .setup({
+            request: {
+              headers: {
+                Authorization: json.token,
+                'Content-type': 'application/json',
+              },
+            },
+          })
+          .get(`${URL}${ROUTE_SALE}`)
+          .expect('status', OK)
+          .then((responseCreate) => {
+            const { json } = responseCreate;
+            expect(json.sales).to.be.an('array');
+          })
+      })
+    });
   })
 });
 
