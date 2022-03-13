@@ -267,7 +267,7 @@ describe('POST /sale', () => {
     });
   });
 
-  describe.only('Valida se é possível criar uma venda com sucesso quando todos os campos são enviados corretamente', () => {
+  describe('Valida se é possível criar uma venda com sucesso quando todos os campos são enviados corretamente', () => {
     it('Será validado que a venda foi criada com sucesso', async () => {
       // verificar se os atributos aparecem no retorno e se o status da requisição é CREATED
       await frisby
@@ -295,7 +295,7 @@ describe('POST /sale', () => {
   });
 });
 
-describe('GET /sale', () => {
+describe.only('GET /sale', () => {
   describe('Valida se todas as vendas são listadas', () => {
     it('Será validado que, ao estar autenticado e acessar a rota, todas as vendas são listadas', async () => {
       await frisby
@@ -315,7 +315,7 @@ describe('GET /sale', () => {
           .expect('status', OK)
           .then((responseCreate) => {
             const { json } = responseCreate;
-            expect(json.sales).to.be.an('array');
+            expect(json.sales).to.be.an('array').that.is.not.empty;
           })
       })
     });
