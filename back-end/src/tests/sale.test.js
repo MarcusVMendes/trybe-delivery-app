@@ -70,8 +70,8 @@ describe('POST /sale', () => {
 
   });
 
-  describe('Valida se todos os campos obrigatórios são enviados corretamente ao tentar criar uma nova venda', () => {
-    it.only('Será validado que não é possível criar uma venda sem o campo totalPrice', async () => {
+  describe.only('Valida se todos os campos obrigatórios são enviados corretamente ao tentar criar uma nova venda', () => {
+    it('Será validado que não é possível criar uma venda sem o campo totalPrice', async () => {
       await frisby
         .post(`${URL}${ROUTE_LOGIN}`, LOGIN_MOCK)
         .then((responseLogin) => {
@@ -132,11 +132,43 @@ describe('POST /sale', () => {
           .expect('status', BAD_REQUEST)
           .then((responseCreate) => {
             const { json } = responseCreate;
-            expect(json.message).to.be.eql('"totalPrice" is required');
+            expect(json.message).to.be.eql('"deliveryAddress" is required');
           })
       })
     });
-    it('Será validado que não é possível criar uma venda sem o campo deliveryNumber', async () => {});
+
+    it('Será validado que não é possível criar uma venda sem o campo deliveryNumber', async () => {
+      await frisby
+      .post(`${URL}${ROUTE_LOGIN}`, LOGIN_MOCK)
+      .then((responseLogin) => {
+        const { json } = responseLogin;
+        return frisby
+          .setup({
+            request: {
+              headers: {
+                Authorization: json.token,
+                'Content-type': 'application/json',
+              },
+            },
+          })
+          .post(`${URL}${ROUTE_SALE}`, {
+            totalPrice: 156.23,
+            deliveryAddress: 'R. Lunnar',
+            status: 'Pendente',
+            sellerId: 2,
+            products: [
+              { productId: 8, quantity: 2 },
+              { productId: 5, quantity: 25 },
+              { productId: 1, quantity: 12 },
+            ],
+          })
+          .expect('status', BAD_REQUEST)
+          .then((responseCreate) => {
+            const { json } = responseCreate;
+            expect(json.message).to.be.eql('"deliveryNumber" is required');
+          })
+      })
+    });
     it('Será validado que não é possível criar uma venda sem o campo status', async () => {});
     it('Será validado que não é possível criar uma venda sem o campo products', async () => {});
     it('Será validado que não é possível criar uma venda sem o campo sellerId', async () => {});
