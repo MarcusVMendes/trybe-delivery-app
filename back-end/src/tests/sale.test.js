@@ -103,7 +103,39 @@ describe('POST /sale', () => {
             })
         })
     });
-    it('Será validado que não é possível criar uma venda sem o campo deliveryAddress', async () => {});
+
+    it('Será validado que não é possível criar uma venda sem o campo deliveryAddress', async () => {
+      await frisby
+      .post(`${URL}${ROUTE_LOGIN}`, LOGIN_MOCK)
+      .then((responseLogin) => {
+        const { json } = responseLogin;
+        return frisby
+          .setup({
+            request: {
+              headers: {
+                Authorization: json.token,
+                'Content-type': 'application/json',
+              },
+            },
+          })
+          .post(`${URL}${ROUTE_SALE}`, {
+            totalPrice: 156.23,
+            deliveryNumber: '895',
+            status: 'Pendente',
+            sellerId: 2,
+            products: [
+              { productId: 8, quantity: 2 },
+              { productId: 5, quantity: 25 },
+              { productId: 1, quantity: 12 },
+            ],
+          })
+          .expect('status', BAD_REQUEST)
+          .then((responseCreate) => {
+            const { json } = responseCreate;
+            expect(json.message).to.be.eql('"totalPrice" is required');
+          })
+      })
+    });
     it('Será validado que não é possível criar uma venda sem o campo deliveryNumber', async () => {});
     it('Será validado que não é possível criar uma venda sem o campo status', async () => {});
     it('Será validado que não é possível criar uma venda sem o campo products', async () => {});
