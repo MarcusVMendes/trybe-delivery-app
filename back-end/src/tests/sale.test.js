@@ -17,6 +17,7 @@ const SALE_MOCK = {
     { productId: 1, quantity: 12 },
   ],
 };
+const SALE_ID = 1;
 const LOGIN_MOCK = {
 	email: 'zebirita@email.com',
 	password: '$#zebirita#$',
@@ -338,13 +339,13 @@ describe.only('GET /sale/:id', () => {
               },
             },
           })
-          .get(`${URL}${ROUTE_SALE_ID}`)
+          .get(`${URL}${ROUTE_SALE}/${SALE_ID}`)
           .expect('status', OK)
           .then((responseCreate) => {
             const { json } = responseCreate;
             expect(json).to.be.an('object').that.is.not.empty;
             expect(json.sale.id).to.be.an('number');
-            expect(json.sale.id).to.be.eq(1);
+            expect(json.sale.id).to.be.eq(SALE_ID);
           })
       })
     });
