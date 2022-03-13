@@ -3,7 +3,7 @@ const { expect } = require('chai');
 
 const URL = 'http://localhost:3001';
 const ROUTE_SALE = '/sale';
-const ROUTE_SALE_ID = '/sale/:id';
+const ROUTE_SALE_ID = '/sale/1';
 const ROUTE_LOGIN = '/user/login';
 const SALE_MOCK = {
 	totalPrice: 1540.99,
@@ -295,7 +295,7 @@ describe('POST /sale', () => {
   });
 });
 
-describe.only('GET /sale', () => {
+describe('GET /sale', () => {
   describe('Valida se todas as vendas são listadas', () => {
     it('Será validado que, ao estar autenticado e acessar a rota, todas as vendas são listadas', async () => {
       await frisby
@@ -322,8 +322,31 @@ describe.only('GET /sale', () => {
   })
 });
 
-describe('GET /sale/:id', () => {
+describe.only('GET /sale/:id', () => {
   describe('Valida se uma venda é listada através do seu ID', () => {
-    it('Será validado que, ao estar autenticado e acessar a rota com ID da venda, ela é listada', async () => {});
+    it('Será validado que, ao estar autenticado e acessar a rota com ID da venda, ela é listada', async () => {
+      await frisby
+      .post(`${URL}${ROUTE_LOGIN}`, LOGIN_MOCK)
+      .then((responseLogin) => {
+        const { json } = responseLogin;
+        return frisby
+          .setup({
+            request: {
+              headers: {
+                Authorization: json.token,
+                'Content-type': 'application/json',
+              },
+            },
+          })
+          .get(`${URL}${ROUTE_SALE_ID}`)
+          .expect('status', OK)
+          .then((responseCreate) => {
+            const { json } = responseCreate;
+            expect(json).to.be.an('object').that.is.not.empty;
+            expect(json.sale.id).to.be.an('number');
+            expect(json.sale.id).to.be.eq(1);
+          })
+      })
+    });
   });
 });
