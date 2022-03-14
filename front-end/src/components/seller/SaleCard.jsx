@@ -2,6 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './SaleCard.css';
 
+const convertDate = (date) => {
+  const EIGHT = 8;
+  const FIVE = 5;
+  const FOUR = 4;
+
+  const day = date.substr(EIGHT, 2);
+  const month = date.substr(FIVE, 2);
+  const year = date.substr(0, FOUR);
+
+  return `${day}/${month}/${year}`;
+};
+
 function SaleCard(props) {
   const {
     deliveryNumber,
@@ -13,19 +25,18 @@ function SaleCard(props) {
   } = props.order;
 
   return (
-    <a
-      href={ `/seller/orders/${id}` }
-      data-testid={ `seller_orders__element-order-id-${id}` }
-    >
-
+    <a href={ `/seller/orders/${id}` }>
       <div className="sale-card">
         <p>
           Pedido
-          <span>{ deliveryNumber }</span>
+          <span
+            data-testid={ `seller_orders__element-order-id-${id}` }>
+            { deliveryNumber }
+          </span>
         </p>    
 
         <p
-          data-testid={ `seller_orders__delivery-status-${id}` }
+          data-testid={ `seller_orders__element-delivery-status-${id}` }
           className="sale-status status-pending"
         >
           { status }
@@ -34,11 +45,11 @@ function SaleCard(props) {
         <p
           data-testid={ `seller_orders__element-order-date-${id}` }
         >
-          { saleDate }
+          { convertDate(saleDate) }
         </p>
 
         <p
-          data-testId={ `seller_orders__element-card-address-${id}` }
+          data-testId={ `seller_orders__element-card-price-${id}` }
         >
           { `R$ ${totalPrice}` }
         </p>
