@@ -37,7 +37,8 @@ const getSaleByIDController = rescue(async (req, res) => {
 const updateSaleByIdController = rescue(async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
-  const sale = await updateSaleByIdService(id, status);
+  await updateSaleByIdService(id, status);
+  const sale = await getSaleByIDService(id);
 
   return res.status(OK).json({ sale });
 });
