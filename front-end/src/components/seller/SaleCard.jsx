@@ -32,9 +32,9 @@ function SaleCard({ order }) {
           <span
             data-testid={ `seller_orders__element-order-id-${id}` }
           >
-          { deliveryNumber }
+            { deliveryNumber }
           </span>
-        </p>    
+        </p>
 
         <p
           data-testid={ `seller_orders__element-delivery-status-${id}` }
@@ -65,12 +65,8 @@ function SaleCard({ order }) {
   );
 }
 
-SaleCard.defaultProps = {
-  deliveryAddress: '',
-};
-
 SaleCard.propTypes = {
-  orders: PropTypes.objectOf(PropTypes.shape({
+  order: PropTypes.objectOf(PropTypes.shape({
     deliveryNumber: PropTypes.number,
     status: PropTypes.string,
     saleDate: PropTypes.string,

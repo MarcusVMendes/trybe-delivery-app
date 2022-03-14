@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+
+
 function TableSale({ products }) {
+  const itemNumber = (id) => `seller_order_details__element-order-table-item-number-${id}`;
+
   return (
     <table>
       <thead>
@@ -17,7 +21,7 @@ function TableSale({ products }) {
         {products.map(({ id, price, SaleProduct, name }) => (
           <tr key={ id }>
             <td
-              data-testid={ `seller_order_details__element-order-table-item-number-${id}` }
+              data-testid={ itemNumber }
             >
               { id }
             </td>
