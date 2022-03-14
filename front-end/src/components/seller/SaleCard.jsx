@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './SaleCard.css';
 
 function SaleCard(props) {
-  const  {
+  const {
     deliveryNumber,
     status,
     saleDate,
@@ -13,18 +13,20 @@ function SaleCard(props) {
   } = props.order;
 
   return (
-    <a href={ `localhost:3000/seller/orders/${id}` }>
-      <div className="sale-card">
-        <p>Pedido</p>
+    <a
+      href={ `/seller/orders/${id}` }
+      data-testid={ `seller_orders__element-order-id-${id}` }
+    >
 
-        <span
-          data-testid={ `seller_orders__element-order-id-${id}` }
-        >
-          { deliveryNumber }
-        </span>
+      <div className="sale-card">
+        <p>
+          Pedido
+          <span>{ deliveryNumber }</span>
+        </p>    
 
         <p
           data-testid={ `seller_orders__delivery-status-${id}` }
+          className="sale-status status-pending"
         >
           { status }
         </p>
@@ -36,13 +38,13 @@ function SaleCard(props) {
         </p>
 
         <p
-          data-testId={`seller_orders__element-card-address-${id}`}
+          data-testId={ `seller_orders__element-card-address-${id}` }
         >
           { `R$ ${totalPrice}` }
         </p>
 
         <span
-          data-testid={`seller_orders__element-card-address-${id}`}
+          data-testid={ `seller_orders__element-card-address-${id}` }
         >
           { deliveryAddress }
         </span>

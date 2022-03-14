@@ -1,5 +1,4 @@
 import React from 'react';
-import './OrderCard.css';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import OrderStatus from '../orderStatus/OrderStatus';

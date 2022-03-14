@@ -4,3 +4,13 @@
   flex-direction: row;
   margin-bottom: 20px;
 }
+
+.sale-status {
+  border-radius: 8px;
+  padding: 16px;
+  text-decoration: none;
+}
+
+.status-pending {
+  background-color: burlywood;
+}
