@@ -19,11 +19,18 @@ const convertDate = (date) => {
   return `${day}/${month}/${year}`;
 };
 
+const STATUS = {
+  PREPARANDO: 'Preparando',
+  EM_TRANSITO: 'Em Trânsito',
+  ENTREGUE: 'Entregue',
+};
+
 function SaleDetails() {
   const [sale, setSale] = useState(null);
   const [loading, setLoading] = useState(false);
   const user = JSON.parse(localStorage.getItem('user'));
   const { id } = useParams();
+  const sts = () => 'seller_order_details__element-order-details-label-delivery-status';
 
   useEffect(() => {
     const fetchOrderById = async () => {
@@ -43,7 +50,7 @@ function SaleDetails() {
 
   const handleClickPrepareOrder = async () => {
     try {
-      const res = await api.updateSaleById(user.token, id, 'Preparando');
+      const res = await api.updateSaleById(user.token, id, STATUS.PREPARANDO);
       setSale(res.sale);
     } catch (error) {
       console.log(error.response);
@@ -52,7 +59,7 @@ function SaleDetails() {
 
   const handleClickDeliveryOrder = async () => {
     try {
-      const data = await api.updateSaleById(user.token, id, 'Em Trânsito');
+      const data = await api.updateSaleById(user.token, id, STATUS.EM_TRANSITO);
       setSale(data.sale);
     } catch (error) {
       console.log(error.response);
@@ -72,15 +79,18 @@ function SaleDetails() {
             <p
               data-testid="seller_order_details__element-order-details-label-order-id"
             >
-              Pedido { ' ' }
+              Pedido
+              { ' ' }
               { sale.id }
             </p>
             <p
-              data-testid="seller_order_details__element-order-details-label-order-date">
+              data-testid="seller_order_details__element-order-details-label-order-date"
+            >
               { convertDate(sale.saleDate) }
             </p>
             <p
-              data-testid="seller_order_details__element-order-details-label-delivery-status">
+              data-testid={ sts }
+            >
               { sale.status }
             </p>
 
@@ -89,9 +99,9 @@ function SaleDetails() {
               type="button"
               testId="seller_order_details__button-preparing-check"
               isDisabled={
-                sale.status === 'Preparando'
-                || sale.status === 'Em Trânsito'
-                || sale.status === 'Entregue'
+                sale.status === STATUS.PREPARANDO
+                || sale.status === STATUS.EM_TRANSITO
+                || sale.status === STATUS.ENTREGUE
               }
               action={ () => handleClickPrepareOrder() }
             />
@@ -101,8 +111,8 @@ function SaleDetails() {
               testId="seller_order_details__button-dispatch-check"
               isDisabled={
                 sale.status === 'Pendente'
-                || sale.status === 'Em Trânsito'
-                || sale.status === 'Entregue'
+                || sale.status === STATUS.EM_TRANSITO
+                || sale.status === STATUS.ENTREGUE
               }
               action={ () => handleClickDeliveryOrder() }
             />

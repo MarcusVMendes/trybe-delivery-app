@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-
-
 function TableSale({ products }) {
-  const itemNumber = (id) => `seller_order_details__element-order-table-item-number-${id}`;
+  const item = (id) => `seller_order_details__element-order-table-item-number-${id}`;
+  const orderName = (id) => `seller_order_details__element-order-table-name-${id}`;
+  const orderQnt = (id) => `seller_order_details__element-order-table-quantity-${id}`;
+  const orderPrice = (id) => `seller_order_details__element-order-table-unit-price-${id}`;
+  const subTotal = (id) => `seller_order_details__element-order-table-sub-total-${id}`;
 
   return (
     <table>
@@ -21,28 +23,28 @@ function TableSale({ products }) {
         {products.map(({ id, price, SaleProduct, name }) => (
           <tr key={ id }>
             <td
-              data-testid={ itemNumber }
+              data-testid={ item }
             >
               { id }
             </td>
             <td
-              data-testid={ `seller_order_details__element-order-table-name-${id}` }
+              data-testid={ orderName }
             >
               { name }
             </td>
             <td
-              data-testid={ `seller_order_details__element-order-table-quantity-${id}` }
+              data-testid={ orderQnt }
             >
               { SaleProduct.quantity }
             </td>
             <td
-              data-testid={ `seller_order_details__element-order-table-unit-price-${id}` }
+              data-testid={ orderPrice }
             >
               R$
               { price.replace('.', ',') }
             </td>
             <td
-              data-testid={ `seller_order_details__element-order-table-sub-total-${id}` }
+              data-testid={ subTotal }
             >
               R$
               { String(price * SaleProduct.quantity).replace('.', ',') }
