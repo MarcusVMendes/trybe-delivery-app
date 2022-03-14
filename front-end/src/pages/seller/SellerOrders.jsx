@@ -31,7 +31,7 @@ function SellerOrders() {
           <SaleCard
             key={ order.id }
             order={ order }
-            role={ user.role } 
+            role={ user.role }
           />))}
       </div>
     </>

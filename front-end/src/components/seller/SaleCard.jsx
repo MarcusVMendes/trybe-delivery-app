@@ -14,15 +14,15 @@ const convertDate = (date) => {
   return `${day}/${month}/${year}`;
 };
 
-function SaleCard(props) {
+function SaleCard({ order }) {
   const {
     deliveryNumber,
     status,
     saleDate,
     totalPrice,
     deliveryAddress,
-    id
-  } = props.order;
+    id,
+  } = order;
 
   return (
     <a href={ `/seller/orders/${id}` }>
@@ -30,8 +30,9 @@ function SaleCard(props) {
         <p>
           Pedido
           <span
-            data-testid={ `seller_orders__element-order-id-${id}` }>
-            { deliveryNumber }
+            data-testid={ `seller_orders__element-order-id-${id}` }
+          >
+          { deliveryNumber }
           </span>
         </p>    
 
@@ -69,12 +70,14 @@ SaleCard.defaultProps = {
 };
 
 SaleCard.propTypes = {
-  deliveryNumber: PropTypes.number.isRequired,
-  status: PropTypes.string.isRequired,
-  saleDate: PropTypes.string.isRequired,
-  totalPrice: PropTypes.number.isRequired,
-  deliveryAddress: PropTypes.string,
-  id: PropTypes.number.isRequired,
+  orders: PropTypes.objectOf(PropTypes.shape({
+    deliveryNumber: PropTypes.number,
+    status: PropTypes.string,
+    saleDate: PropTypes.string,
+    totalPrice: PropTypes.number,
+    deliveryAddress: PropTypes.string,
+    id: PropTypes.number,
+  })).isRequired,
 };
 
 export default SaleCard;

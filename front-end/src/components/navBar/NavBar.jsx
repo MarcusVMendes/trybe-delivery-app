@@ -18,7 +18,7 @@ function NavBar({ userName, role, links }) {
           >
             { links[0].name }
           </a>
-          {isCustomer 
+          {isCustomer
             && <a href={ links[1].url } data-testid={ orders }>{ links[1].name }</a>}
         </div>
         <div>

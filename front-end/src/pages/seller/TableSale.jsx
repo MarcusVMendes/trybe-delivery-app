@@ -52,7 +52,7 @@ function TableSale({ products }) {
 
 TableSale.propTypes = {
   products: PropTypes.arrayOf(PropTypes.shape({
-    SaleProduct: PropTypes.objectOf(PropTypes.shape({ quantity: PropTypes.number, })),
+    SaleProduct: PropTypes.objectOf(PropTypes.shape({ quantity: PropTypes.number })),
     id: PropTypes.number,
     name: PropTypes.string,
     price: PropTypes.string,

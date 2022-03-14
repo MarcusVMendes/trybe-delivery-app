@@ -43,21 +43,21 @@ function SaleDetails() {
 
   const handleClickPrepareOrder = async () => {
     try {
-      const response = await api.updateSaleById(user.token, id, 'Preparando');
-      setSale(response.sale);
+      const res = await api.updateSaleById(user.token, id, 'Preparando');
+      setSale(res.sale);
     } catch (error) {
       console.log(error.response);
     }
-  }
+  };
 
   const handleClickDeliveryOrder = async () => {
     try {
-      const response = await api.updateSaleById(user.token, id, 'Em Trânsito');
-      setSale(response.sale);
+      const data = await api.updateSaleById(user.token, id, 'Em Trânsito');
+      setSale(data.sale);
     } catch (error) {
       console.log(error.response);
     }
-  }
+  };
 
   if (!sale) return <p>Carregando detalhes da venda...</p>;
 
@@ -69,49 +69,43 @@ function SaleDetails() {
 
         <div>
           <header className="details-header">
-            <div>
-              <p>
-                Pedido
-                <span
-                  data-testid="seller_order_details__element-order-details-label-order-id">
-                  { sale.id }
-                </span>
-              </p>
+            <p
+              data-testid="seller_order_details__element-order-details-label-order-id"
+            >
+              Pedido { ' ' }
+              { sale.id }
+            </p>
+            <p
+              data-testid="seller_order_details__element-order-details-label-order-date">
+              { convertDate(sale.saleDate) }
+            </p>
+            <p
+              data-testid="seller_order_details__element-order-details-label-delivery-status">
+              { sale.status }
+            </p>
 
-              <p
-                data-testid="seller_order_details__element-order-details-label-order-date">
-                { convertDate(sale.saleDate) }
-              </p>
-
-              <p
-                data-testid="seller_order_details__element-order-details-label-delivery-status">
-                { sale.status }
-              </p>
-            </div>
-            <div>
-              <Button
-                text="PREPARAR PEDIDO"
-                type="button"
-                testId="seller_order_details__button-preparing-check"
-                isDisabled={
-                  sale.status === 'Preparando' || 
-                  sale.status === 'Em Trânsito' || 
-                  sale.status === 'Entregue'
-                }
-                action={ () => handleClickPrepareOrder() }
-              />
-              <Button
-                text="SAIU PARA ENTREGA"
-                type="button"
-                testId="seller_order_details__button-dispatch-check"
-                isDisabled={
-                  sale.status === 'Pendente' || 
-                  sale.status === 'Em Trânsito' || 
-                  sale.status === 'Entregue'
-                }
-                action={ () => handleClickDeliveryOrder() }
-              />
-            </div>
+            <Button
+              text="PREPARAR PEDIDO"
+              type="button"
+              testId="seller_order_details__button-preparing-check"
+              isDisabled={
+                sale.status === 'Preparando'
+                || sale.status === 'Em Trânsito'
+                || sale.status === 'Entregue'
+              }
+              action={ () => handleClickPrepareOrder() }
+            />
+            <Button
+              text="SAIU PARA ENTREGA"
+              type="button"
+              testId="seller_order_details__button-dispatch-check"
+              isDisabled={
+                sale.status === 'Pendente'
+                || sale.status === 'Em Trânsito'
+                || sale.status === 'Entregue'
+              }
+              action={ () => handleClickDeliveryOrder() }
+            />
           </header>
 
           { loading && <p>Carregando...</p>}

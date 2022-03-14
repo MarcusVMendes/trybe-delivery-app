@@ -81,7 +81,7 @@ const getSaleById = async (token, id) => {
 };
 
 const updateSaleById = async (token, id, status) => {
-  const body = { status }
+  const body = { status };
   const { data } = await axios.put(`${baseUrl}/sale/${id}`, body, {
     headers: {
       authorization: token,

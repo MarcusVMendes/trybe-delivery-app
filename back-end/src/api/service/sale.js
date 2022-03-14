@@ -60,11 +60,11 @@ const getSaleByIDService = async (id) => {
 
 const updateSaleByIdService = async (id, status) => {
   const sale = await Sale.update(
-    { status: status },
-    { where: { id: id } }
-  )
+    { status },
+    { where: { id } },
+  );
   return sale;
-}
+};
 
 module.exports = {
   createSaleService,
