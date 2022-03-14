@@ -41,7 +41,7 @@ function TableSale({ products }) {
               data-testid={ `seller_order_details__element-order-table-sub-total-${id}` }
             >
               R$
-              { price * SaleProduct.quantity }
+              { String(price * SaleProduct.quantity).replace('.', ',') }
             </td>
           </tr>
         ))}
@@ -52,7 +52,7 @@ function TableSale({ products }) {
 
 TableSale.propTypes = {
   products: PropTypes.arrayOf(PropTypes.shape({
-    SaleProduct: PropTypes.objectOf(PropTypes.shape({ quantity: PropTypes.string, })),
+    SaleProduct: PropTypes.objectOf(PropTypes.shape({ quantity: PropTypes.number, })),
     id: PropTypes.number,
     name: PropTypes.string,
     price: PropTypes.string,
