@@ -11,7 +11,7 @@ function SellerOrders() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await api.getOrders(user.token);
+        const response = await api.getSales(user.token);
         setSales(response.sales);
       } catch (error) {
         console.log(error.response);
@@ -25,13 +25,13 @@ function SellerOrders() {
 
   return (
     <>
-      <NavBar userName={user.name} role={user.role} links={sellerLinks} />
+      <NavBar userName={ user.name } role={ user.role } links={ sellerLinks } />
       <div>
         {sales.map((order) => (
           <SaleCard
             key={ order.id }
             order={ order }
-            role={user.role} 
+            role={ user.role } 
           />))}
       </div>
     </>
