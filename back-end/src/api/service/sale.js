@@ -42,7 +42,7 @@ const getSalesService = async () => {
 
 const getSaleByIDService = async (id) => {
   const sale = await Sale.findByPk(id, {
-    attributes: { exclude: ['deliveryAddress', 'deliveryNumber'] },
+    // attributes: { exclude: ['deliveryAddress', 'deliveryNumber'] },
     include: [
       {
         model: Product, // Sale POSSUI ASSOCIAÇÃO COM Product
@@ -58,8 +58,17 @@ const getSaleByIDService = async (id) => {
   return sale;
 };
 
+const updateSaleByIdService = async (id, status) => {
+  const sale = await Sale.update(
+    { status: status },
+    { where: { id: id } }
+  )
+  return sale;
+}
+
 module.exports = {
   createSaleService,
   getSalesService,
   getSaleByIDService,
+  updateSaleByIdService,
 };
