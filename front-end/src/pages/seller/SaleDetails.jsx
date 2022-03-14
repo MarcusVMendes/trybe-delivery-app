@@ -4,12 +4,23 @@ import api from '../../services/api';
 import { sellerLinks } from '../../utils/navBarLinks';
 import NavBar from '../../components/navBar/NavBar';
 import Button from '../../components/button/Button';
-import './SaleDetails.css';
 import TableSale from './TableSale';
+import './SaleDetails.css';
+
+const convertDate = (date) => {
+  const EIGHT = 8;
+  const FIVE = 5;
+  const FOUR = 4;
+
+  const day = date.substr(EIGHT, 2);
+  const month = date.substr(FIVE, 2);
+  const year = date.substr(0, FOUR);
+
+  return `${day}/${month}/${year}`;
+};
 
 function SaleDetails() {
   const [sale, setSale] = useState(null);
-  const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(false);
   const user = JSON.parse(localStorage.getItem('user'));
   const { id } = useParams();
@@ -30,18 +41,23 @@ function SaleDetails() {
     fetchOrderById();
   }, []);
 
-  useEffect(() => {}, []);
-
   const handleClickPrepareOrder = async () => {
     try {
-      const response = await api.updateSaleById(user.token, id, status);
+      const response = await api.updateSaleById(user.token, id, 'Preparando');
       setSale(response.sale);
     } catch (error) {
       console.log(error.response);
     }
   }
 
-  console.log(sale);
+  const handleClickDeliveryOrder = async () => {
+    try {
+      const response = await api.updateSaleById(user.token, id, 'Em Trânsito');
+      setSale(response.sale);
+    } catch (error) {
+      console.log(error.response);
+    }
+  }
 
   if (!sale) return <p>Carregando detalhes da venda...</p>;
 
@@ -58,13 +74,18 @@ function SaleDetails() {
                 Pedido
                 <span
                   data-testid="seller_order_details__element-order-details-label-order-id">
-                    { sale.id }
-                  </span>
-                </p>
+                  { sale.id }
+                </span>
+              </p>
+
+              <p
+                data-testid="seller_order_details__element-order-details-label-order-date">
+                { convertDate(sale.saleDate) }
+              </p>
 
               <p
                 data-testid="seller_order_details__element-order-details-label-delivery-status">
-                  { sale.status }
+                { sale.status }
               </p>
             </div>
             <div>
@@ -88,7 +109,7 @@ function SaleDetails() {
                   sale.status === 'Em Trânsito' || 
                   sale.status === 'Entregue'
                 }
-                // action={ () => handleClickPrepareOrder() }
+                action={ () => handleClickDeliveryOrder() }
               />
             </div>
           </header>
