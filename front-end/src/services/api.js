@@ -16,25 +16,27 @@ const register = async (name, email, password, role = 'customer') => {
   return data;
 };
 
+const adminRegister = async (...params) => {
+  const [name, email, password, role = 'customer', token] = params;
+  const body = { name, email, password, role };
+  const headers = { 'Content-Type': 'application/json', authorization: token };
+  const data = await axios.post(`${baseUrl}/admin/register`, body, { headers });
+
+  return data;
+};
+
+const getAllNonAdminUsers = async (token) => {
+  const headers = { authorization: token };
+  const { data } = await axios.get(`${baseUrl}/admin`, { headers });
+
+  return data;
+};
+
 const getProducts = async () => {
   const { data } = await axios.get(`${baseUrl}/products`);
   const { products } = data;
 
   return products;
-};
-
-const getOrders = async (token) => {
-  const headers = { authorization: token }
-  const { data } = await axios.get(`${baseUrl}/sale`, { headers });
-
-  return data;
-};
-
-const getOrderById = async (token, id) => {
-  const headers = { authorization: token }
-  const data = await axios.get(`${baseUrl}/sale/${id}`, { headers });
-
-  return data;
 };
 
 const insertSale = async (token, ...infoSale) => {
@@ -48,22 +50,6 @@ const insertSale = async (token, ...infoSale) => {
       authorization: token,
     },
   });
-
-  return data;
-};
-
-const adminRegister = async (...params) => {
-  const [name, email, password, role = 'customer', token] = params;
-  const body = { name, email, password, role };
-  const headers = { 'Content-Type': 'application/json', authorization: token };
-  const data = await axios.post(`${baseUrl}/admin/register`, body, { headers });
-
-  return data;
-};
-
-const getAllNonAdminUsers = async (token) => {
-  const headers = { authorization: token };
-  const { data } = await axios.get(`${baseUrl}/admin`, { headers });
 
   return data;
 };
@@ -94,16 +80,25 @@ const getSaleById = async (token, id) => {
   return data;
 };
 
+const updateSaleById = async (token, id) => {
+  const { data } = await axios.put(`${baseUrl}/sale/${id}`, {
+    headers: {
+      authorization: token,
+    },
+  });
+
+  return data;
+};
+
 export default {
   login,
   register,
-  insertSale,
-  getSales,
-  getSaleById,
   adminRegister,
   getAllNonAdminUsers,
   getUserByEmail,
   getProducts,
-  getOrders,
-  getOrderById,
+  insertSale,
+  getSales,
+  getSaleById,
+  updateSaleById,
 };
