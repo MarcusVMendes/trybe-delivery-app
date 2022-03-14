@@ -18,7 +18,8 @@ function NavBar({ userName, role, links }) {
           >
             { links[0].name }
           </a>
-          {isCustomer && <a href={ links[1].url } data-testid={ orders }>{ links[1].name }</a>}
+          {isCustomer 
+            && <a href={ links[1].url } data-testid={ orders }>{ links[1].name }</a>}
         </div>
         <div>
           <p data-testid="customer_products__element-navbar-user-full-name">
