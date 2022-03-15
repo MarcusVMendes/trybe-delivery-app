@@ -9,31 +9,9 @@ const login = async (email, password) => {
   return data;
 };
 
-const getProducts = async () => {
-  const { data } = await axios.get(`${baseUrl}/products`);
-  const { products } = data;
-
-  return products;
-};
-
 const register = async (name, email, password, role = 'customer') => {
   const body = { name, email, password, role };
   const data = await axios.post(`${baseUrl}/user/register`, body);
-
-  return data;
-};
-
-const insertSale = async (token, ...infoSale) => {
-  const [
-    totalPrice, deliveryAddress, deliveryNumber, status, products, sellerId,
-  ] = infoSale;
-  const { data } = await axios.post(`${baseUrl}/sale`, {
-    totalPrice, deliveryAddress, deliveryNumber, status, products, sellerId,
-  }, {
-    headers: {
-      authorization: token,
-    },
-  });
 
   return data;
 };
@@ -50,6 +28,28 @@ const adminRegister = async (...params) => {
 const getAllNonAdminUsers = async (token) => {
   const headers = { authorization: token };
   const { data } = await axios.get(`${baseUrl}/admin`, { headers });
+
+  return data;
+};
+
+const getProducts = async () => {
+  const { data } = await axios.get(`${baseUrl}/products`);
+  const { products } = data;
+
+  return products;
+};
+
+const insertSale = async (token, ...infoSale) => {
+  const [
+    totalPrice, deliveryAddress, deliveryNumber, status, products, sellerId,
+  ] = infoSale;
+  const { data } = await axios.post(`${baseUrl}/sale`, {
+    totalPrice, deliveryAddress, deliveryNumber, status, products, sellerId,
+  }, {
+    headers: {
+      authorization: token,
+    },
+  });
 
   return data;
 };
@@ -80,14 +80,26 @@ const getSaleById = async (token, id) => {
   return data;
 };
 
+const updateSaleById = async (token, id, status) => {
+  const body = { status };
+  const { data } = await axios.put(`${baseUrl}/sale/${id}`, body, {
+    headers: {
+      authorization: token,
+    },
+  });
+
+  return data;
+};
+
 export default {
   login,
-  getProducts,
   register,
-  insertSale,
-  getSales,
-  getSaleById,
   adminRegister,
   getAllNonAdminUsers,
   getUserByEmail,
+  getProducts,
+  insertSale,
+  getSales,
+  getSaleById,
+  updateSaleById,
 };

@@ -33,6 +33,7 @@ function Login() {
       localStorage.setItem('user', JSON.stringify(data));
       if (data.role === 'customer') history.push('/customer/products');
       if (data.role === 'administrator') history.push('/admin/manage');
+      if (data.role === 'seller') history.push('/seller/orders');
     } catch (error) {
       setLoginError(true);
 
