@@ -89,7 +89,7 @@ function SaleDetails() {
               { convertDate(sale.saleDate) }
             </p>
             <p
-              data-testid={ sts }
+              data-testid={ sts() }
             >
               { sale.status }
             </p>
