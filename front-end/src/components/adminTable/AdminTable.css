@@ -1,0 +1,47 @@
+.admin-table {
+  width: 63%;
+}
+
+.table-header {
+
+  /* background-color: rgb(233, 233, 233); */
+  height: 35px;
+}
+
+td {
+  height: 30px;
+}
+
+.item {
+  background-color: #2ec08a;
+  border-radius: 15% 0% 0% 15%;
+  color: black;
+  font-weight: 600;
+  text-align: center;
+}
+
+.name {
+  background-color: rgb(233, 233, 233);
+  text-align: center;
+}
+
+.email {
+  background-color: #036b52;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+}
+
+.role {
+  background-color: #421981;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+}
+
+.exclude {
+  background-color: #0369f7;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+}

@@ -1,0 +1,62 @@
+/* Header Setup */
+:root {
+
+  --font-size: 20px;
+}
+
+.header {
+  background-color: #036b52;
+  display: flex;
+  height: 60px;
+  justify-content: space-between;
+  max-height: 60px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.category {
+  background-color: #2fc18c;
+  display: flex;
+}
+
+.category p {
+  align-self: center;
+  color: black;
+  font-size: var(--font-size);
+  font-weight: 600;
+}
+
+.right-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.user-name {
+  background-color: #421981;
+  display: flex;
+  justify-content: center;
+  width: 250px;
+}
+
+.user-name p {
+  align-self: center;
+  color: white;
+  font-size: var(--font-size);
+  font-weight: 600;
+}
+
+.leave-button {
+  align-items: center;
+  background-color: #0369f7;
+  border-radius: 0;
+  color: white;
+  display: flex;
+  font-size: var(--font-size);
+  font-weight: 600;
+  height: 100%;
+  justify-content: center;
+  max-width: 100px;
+  position: relative;
+  top: -4px;
+  width: 100px;
+}

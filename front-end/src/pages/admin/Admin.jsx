@@ -1,9 +1,10 @@
 import { React, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Input from '../../components/input/Input';
-import Button from '../../components/button/Button';
 import AdminTable from '../../components/adminTable/AdminTable';
+import Header from '../../components/header/Header';
 import api from '../../services/api';
+import './Admin.css';
 
 const NAME_MIN_LENGHT = 12;
 const PASSWORD_MIN_LENGTH = 6;
@@ -64,46 +65,57 @@ function Admin() {
   function renderRegisterForm() {
     return (
       <form className="admin-form">
-        <Input
-          label="Name"
-          placeholder="Nome e sobrenome"
-          type="text"
-          testId="admin_manage__input-name"
-          value={ name }
-          handleChange={ handleChange }
-        />
-        <Input
-          label="Email"
-          placeholder="seu-email@email.com.br"
-          type="email"
-          testId="admin_manage__input-email"
-          value={ email }
-          handleChange={ handleChange }
-        />
-        <Input
-          label="Password"
-          placeholder="**********"
-          type="password"
-          testId="admin_manage__input-password"
-          value={ password }
-          handleChange={ handleChange }
-        />
-        <select
-          onChange={ handleChange }
-          value={ role }
-          data-testid="admin_manage__select-role"
-        >
-          <option value="seller">Seller</option>
-          <option value="customer">Customer</option>
-          <option value="administrator">Administrator</option>
-        </select>
-        <Button
-          text="Cadastrar"
-          type="button"
+        <div className="admin-name-container">
+          <Input
+            label="Name"
+            placeholder="Nome e sobrenome"
+            type="text"
+            testId="admin_manage__input-name"
+            value={ name }
+            handleChange={ handleChange }
+          />
+        </div>
+        <div className="admin-email-container">
+          <Input
+            label="Email"
+            placeholder="seu-email@email.com.br"
+            type="email"
+            testId="admin_manage__input-email"
+            value={ email }
+            handleChange={ handleChange }
+          />
+        </div>
+        <div className="admin-password-container">
+          <Input
+            label="Password"
+            placeholder="**********"
+            type="password"
+            testId="admin_manage__input-password"
+            value={ password }
+            handleChange={ handleChange }
+          />
+        </div>
+        <div className="admin-role-container">
+          <label className="select-label">Tipo</label>
+          <select
+            onChange={ handleChange }
+            value={ role }
+            data-testid="admin_manage__select-role"
+          >
+            <option value="seller">Seller</option>
+            <option value="customer">Customer</option>
+            <option value="administrator">Administrator</option>
+          </select>
+        </div>
+        <button
+          type="submit"
           testId="admin_manage__button-register"
-          isDisabled={ buttonDisabled }
-          action={ () => handleSubmit() }
-        />
+          disabled={ buttonDisabled }
+          onClick={ () => handleSubmit() }
+          className="admin-register-button"
+        >
+          Cadastrar
+        </button>
       </form>
     );
   }
@@ -114,8 +126,16 @@ function Admin() {
 
   return (
     <div className="wrapper">
-      {renderRegisterForm()}
-      <AdminTable users={ users } />
+      <div className="header-container">
+        <Header
+          category="GERENCIAR USUÁRIOS"
+          user={ userData.name }
+        />
+      </div>
+      <div className="table-container">
+        {renderRegisterForm()}
+        <AdminTable users={ users } />
+      </div>
     </div>
   );
 }
