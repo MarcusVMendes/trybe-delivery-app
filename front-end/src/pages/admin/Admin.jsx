@@ -96,16 +96,19 @@ function Admin() {
           />
         </div>
         <div className="admin-role-container">
-          <label className="select-label">Tipo</label>
-          <select
-            onChange={ handleChange }
-            value={ role }
-            data-testid="admin_manage__select-role"
-          >
-            <option value="seller">Seller</option>
-            <option value="customer">Customer</option>
-            <option value="administrator">Administrator</option>
-          </select>
+          <label htmlFor="admin-role" className="select-label">
+            Tipo
+            <select
+              onChange={ handleChange }
+              value={ role }
+              data-testid="admin_manage__select-role"
+              id="admin-role"
+            >
+              <option value="seller">Seller</option>
+              <option value="customer">Customer</option>
+              <option value="administrator">Administrator</option>
+            </select>
+          </label>
         </div>
         <button
           type="submit"

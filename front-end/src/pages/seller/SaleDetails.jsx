@@ -46,7 +46,7 @@ function SaleDetails() {
     };
 
     fetchOrderById();
-  }, []);
+  }, [user.token, id]);
 
   const handleClickPrepareOrder = async () => {
     try {

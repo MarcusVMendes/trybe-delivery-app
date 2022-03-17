@@ -19,7 +19,7 @@ function SellerOrders() {
     };
 
     fetchOrders();
-  }, []);
+  }, [user.token]);
 
   if (!sales) return <p>Carregando vendas...</p>;
 
