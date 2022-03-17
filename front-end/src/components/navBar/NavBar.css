@@ -17,17 +17,18 @@
 header {
   background-color: var(--primary);
   color: var(--light-text);
-  padding: 10px 0;
-  text-decoration: none;
   width: 100%;
 }
 
 nav {
+  align-items: center;
   display: flex;
+  justify-content: space-between;
 }
 
 a, p {
   padding: 10px;
+  text-decoration: none;
 }
 
 a:nth-of-type( 1 ) {
@@ -46,4 +47,9 @@ a:nth-child( 1 ) {
 
 header p {
   background-color: var(--tertiary);
+  margin: 0;
+}
+
+.nav-bar__second-container {
+  display: flex;
 }
