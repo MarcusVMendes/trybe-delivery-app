@@ -11,7 +11,7 @@ function NavBar({ userName, role, links }) {
   return (
     <header>
       <nav>
-        <div>
+        <div className="nav-bar__first-container">
           <a
             href={ links[0].url }
             data-testid="customer_products__element-navbar-link-products"
@@ -21,7 +21,7 @@ function NavBar({ userName, role, links }) {
           {isCustomer
             && <a href={ links[1].url } data-testid={ orders }>{ links[1].name }</a>}
         </div>
-        <div>
+        <div className="nav-bar__second-container">
           <p data-testid="customer_products__element-navbar-user-full-name">
             { userName }
           </p>
