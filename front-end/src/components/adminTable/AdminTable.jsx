@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import './AdminTable.css';
 
 const testUser = 'admin_manage__element-user-table-item-number';
 const testName = 'admin_manage__element-user-table-name';
@@ -10,9 +11,9 @@ const testRemove = 'admin_manage__element-user-table-remove';
 function AdminTable(props) {
   const { users } = props;
   return (
-    <table>
+    <table className="admin-table">
       <thead>
-        <tr>
+        <tr className="table-header">
           <th>Item</th>
           <th>Nome</th>
           <th>E-mail</th>
@@ -24,11 +25,39 @@ function AdminTable(props) {
         {
           users.map((user, index) => (
             <tr key={ index }>
-              <td data-testid={ `${testUser}-${index}` }>{user.id}</td>
-              <td data-testid={ `${testName}-${index}` }>{user.name}</td>
-              <td data-testid={ `${testEmail}-${index}` }>{user.email}</td>
-              <td data-testid={ `${testRole}-${index}` }>{user.role}</td>
-              <td data-testid={ `${testRemove}-${index}` }>Botao excluir</td>
+              <td
+                className="item"
+                data-testid={ `${testUser}-${index}` }
+              >
+                {user.id}
+              </td>
+
+              <td
+                className="name"
+                data-testid={ `${testName}-${index}` }
+              >
+                {user.name}
+              </td>
+
+              <td
+                className="email"
+                data-testid={ `${testEmail}-${index}` }
+              >
+                {user.email}
+              </td>
+
+              <td
+                className="role"
+                data-testid={ `${testRole}-${index}` }
+              >
+                {user.role}
+              </td>
+              <td
+                className="exclude"
+                data-testid={ `${testRemove}-${index}` }
+              >
+                Excluir
+              </td>
             </tr>
           ))
         }
